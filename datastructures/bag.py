@@ -16,7 +16,7 @@ class Bag(IBag[T]): #Bag implements IBAG interface
         if item in self.__bag:
             self.__bag[item] += 1
         elif item == None:
-            raise ValueError("Cannot add None")
+            raise TypeError("Cannot add None")
         else:
             self.__bag[item] = 1
         # raise NotImplementedError("add method not implemented")
@@ -34,8 +34,8 @@ class Bag(IBag[T]): #Bag implements IBAG interface
             count = self.__bag[item]
             return count
         else:
-            print("There are no items of that type in your bag")
-            return
+            return 0
+
         # raise NotImplementedError("count method not implemented")
 
     def __len__(self) -> int:
@@ -46,7 +46,14 @@ class Bag(IBag[T]): #Bag implements IBAG interface
         # raise NotImplementedError("__len__ method not implemented")
 
     def distinct_items(self) -> Iterable[T]:
-        raise NotImplementedError("distinct_items method not implemented")
+        dist_items = []
+        print(self.__bag)
+        for items in self.__bag:
+            for i in range (0,self.count(items)):
+                dist_items.append(items)
+        return dist_items
+
+        # raise NotImplementedError("distinct_items method not implemented")
 
     def __contains__(self, item) -> bool:
         if item in self.__bag:
