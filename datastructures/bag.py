@@ -24,11 +24,9 @@ class Bag(IBag[T]): #Bag implements IBAG interface
     def remove(self, item: T) -> None:
         if item in self.__bag:
             self.__bag[item] -= 1
-        elif item == None:
-            raise ValueError("Cannot remove None")
         else:
-            print("There are no items of that type in your bag")
-            return
+            raise ValueError("Cannot remove None")
+
         # raise NotImplementedError("remove method not implemented")
 
     def count(self, item: T) -> int:
