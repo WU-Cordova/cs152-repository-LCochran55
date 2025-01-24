@@ -15,6 +15,8 @@ class Bag(IBag[T]): #Bag implements IBAG interface
     def add(self, item: T) -> None:
         if item in self.__bag:
             self.__bag[item] += 1
+        elif item == None:
+            raise ValueError("Cannot add None")
         else:
             self.__bag[item] = 1
         # raise NotImplementedError("add method not implemented")
@@ -22,6 +24,8 @@ class Bag(IBag[T]): #Bag implements IBAG interface
     def remove(self, item: T) -> None:
         if item in self.__bag:
             self.__bag[item] -= 1
+        elif item == None:
+            raise ValueError("Cannot remove None")
         else:
             print("There are no items of that type in your bag")
             return
