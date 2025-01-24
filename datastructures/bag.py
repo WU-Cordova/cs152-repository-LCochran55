@@ -30,20 +30,27 @@ class Bag(IBag[T]): #Bag implements IBAG interface
     def count(self, item: T) -> int:
         if item in self.__bag:
             count = self.__bag[item]
-            print("There are" + count + item + "s in your bag")
+            return count
         else:
             print("There are no items of that type in your bag")
             return
         # raise NotImplementedError("count method not implemented")
 
     def __len__(self) -> int:
-        raise NotImplementedError("__len__ method not implemented")
+        length = len(self.__bag)
+        return length
+        # raise NotImplementedError("__len__ method not implemented")
 
     def distinct_items(self) -> Iterable[T]:
         raise NotImplementedError("distinct_items method not implemented")
 
     def __contains__(self, item) -> bool:
-        raise NotImplementedError("__contains__ method not implemented")
+        if item in self.__bag:
+            return True
+        else:
+            return False
+        # raise NotImplementedError("__contains__ method not implemented")
 
     def clear(self) -> None:
-        raise NotImplementedError("clear method not implemented")
+        self.__bag.clear()
+        # raise NotImplementedError("clear method not implemented")
