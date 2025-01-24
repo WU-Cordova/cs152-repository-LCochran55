@@ -21,7 +21,7 @@ class Bag(IBag[T]): #Bag implements IBAG interface
 
     def remove(self, item: T) -> None:
         if item in self.__bag:
-            self.__bag.pop(item)
+            self.__bag[item] -= 1
         else:
             print("There are no items of that type in your bag")
             return
