@@ -10,32 +10,31 @@ class Bag(IBag[T]): #Bag implements IBAG interface
              for item in items:
                   self.add(item)
 
-        raise NotImplementedError("__init__ method not implemented")
+        # raise NotImplementedError("__init__ method not implemented")
 
     def add(self, item: T) -> None:
         if item in self.__bag:
             self.__bag[item] += 1
         else:
             self.__bag[item] = 1
-        raise NotImplementedError("add method not implemented")
+        # raise NotImplementedError("add method not implemented")
 
     def remove(self, item: T) -> None:
         if item in self.__bag:
             self.__bag.pop(item)
         else:
-            print("Item not in bag")
+            print("There are no items of that type in your bag")
             return
-        raise NotImplementedError("remove method not implemented")
+        # raise NotImplementedError("remove method not implemented")
 
     def count(self, item: T) -> int:
         if item in self.__bag:
             count = self.__bag[item]
             print("There are" + count + item + "s in your bag")
         else:
-            while not(item in self.__bag):
-                print("There are no items of that type in your bag")
-                self.__bag.count()
-        raise NotImplementedError("count method not implemented")
+            print("There are no items of that type in your bag")
+            return
+        # raise NotImplementedError("count method not implemented")
 
     def __len__(self) -> int:
         raise NotImplementedError("__len__ method not implemented")
