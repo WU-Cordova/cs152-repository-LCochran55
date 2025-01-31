@@ -35,7 +35,6 @@ class Bag(IBag[T]): #Bag implements IBAG interface
             return count
         else:
             return 0
-
         # raise NotImplementedError("count method not implemented")
 
     def __len__(self) -> int:
@@ -47,7 +46,6 @@ class Bag(IBag[T]): #Bag implements IBAG interface
 
     def distinct_items(self) -> Iterable[T]:
         dist_items = []
-        print(self.__bag)
         for items in self.__bag:
             for i in range (0,self.count(items)):
                 dist_items.append(items)
