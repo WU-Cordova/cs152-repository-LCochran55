@@ -19,7 +19,27 @@ from datastructures.iarray import IArray, T
 class Array(IArray[T]):  
 
     def __init__(self, starting_sequence: Sequence[T]=[], data_type: type=object) -> None: 
-        raise NotImplementedError('Constructor not implemented.')
+        self.__logical_size: int = len(starting_sequence)
+        self.__physics_size: int = self.__logical_size
+        self.__data_type: type = data_type
+
+        if not isinstance(starting_sequence,Sequence):
+            raise ValueError("starting_sequence must be a valid sequence type")
+        
+        for index in range(self.__logical_size):
+            if not isinstance(starting_sequence[index],self.__data_type):
+                raise TypeError("items in starting_sequence must be the same data type")
+            
+        for item in starting_sequence
+            if not isinstance(item,self.__data_type):
+                raise TypeError(f"Item{repr(item)} is not of type {str(data_type)}")
+
+        self.__items: NDArray = np.empty(self.__logical_size,dtype:self.__data_type)
+
+        for index in range(self.__logical_size):
+            self.__items[index] = starting_sequence[index]
+
+
 
     @overload
     def __getitem__(self, index: int) -> T: ...
@@ -47,18 +67,23 @@ class Array(IArray[T]):
         raise NotImplementedError('Length not implemented.')
 
     def __eq__(self, other: object) -> bool:
+        # for loop thru logical size
+        #if not Other[index] == Self[index] etc
         raise NotImplementedError('Equality not implemented.')
     
     def __iter__(self) -> Iterator[T]:
         raise NotImplementedError('Iteration not implemented.')
 
     def __reversed__(self) -> Iterator[T]:
+        #Slicing 
         raise
 
     def __delitem__(self, index: int) -> None:
        raise NotImplementedError('Delete not implemented.')
 
     def __contains__(self, item: Any) -> bool:
+        #Numpy supports contain
+        #Any function
         raise NotImplementedError('Contains not implemented.')
 
     def clear(self) -> None:
