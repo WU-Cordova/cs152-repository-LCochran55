@@ -72,7 +72,10 @@ class Array(IArray[T]):
     
     def __setitem__(self, index: int, item: T) -> None:
         #check if index if out of bounds or iem is right type
-        self.__elements[index] = item
+        if(type(item) == self.__data_type):
+            self.__elements[index] = item
+        else:
+            raise TypeError("Item does not contain same type as Array")
         # raise NotImplementedError('Indexing not implemented.')
 
     def append(self, data: T) -> None:
@@ -125,6 +128,8 @@ class Array(IArray[T]):
         # raise NotImplementedError('Iteration not implemented.')
 
     def __reversed__(self) -> Iterator[T]:
+        reversedList = self.__elements.tolist().reverse()
+
         #Slicing 
         raise
 
@@ -141,13 +146,14 @@ class Array(IArray[T]):
 
     def clear(self) -> None:
         #make new empty array  and reassign
+        emptyArray = np.empty()
         raise NotImplementedError('Clear not implemented.')
 
     def __str__(self) -> str:
         return '[' + ', '.join(str(item) for item in self) + ']'
     
     def __repr__(self) -> str:
-        return f'Array {self.__str__()}, Logical: {self.__item_count}, Physical: {len(self.__items)}, type: {self.__data_type}'
+        return f'Array {self.__str__()}, Logical: {self.__logical_size}, Physical: {len(self.__physical_size)}, type: {self.__data_type}'
     
 
 if __name__ == '__main__':
