@@ -132,9 +132,10 @@ class Array(IArray[T]):
        raise NotImplementedError('Delete not implemented.')
 
     def __contains__(self, item: Any) -> bool:
+        return self.__elements.isin(item, self.__elements)
         #Numpy supports contain
         #Any function
-        raise NotImplementedError('Contains not implemented.')
+        # raise NotImplementedError('Contains not implemented.')
 
     def clear(self) -> None:
         #make new empty array  and reassign
