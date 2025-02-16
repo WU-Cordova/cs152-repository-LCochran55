@@ -79,7 +79,9 @@ class Array(IArray[T]):
         # raise NotImplementedError('Indexing not implemented.')
 
     def append(self, data: T) -> None:
-        self.__elements.append(data)
+        listElements = self.__elements.tolist()
+        listElements.append(data)
+        self.__elemets = np.array(listElements)
 
         # raise NotImplementedError('Append not implemented.')
     
