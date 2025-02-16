@@ -27,7 +27,7 @@ class Array(IArray[T]):
         self.__elements = np.empty(self.__logical_size, dtype=self.__data_type)
 
         for index in range(self.__logical_size):
-            self.__items[index] = copy.deepcopy(starting_sequence[index])
+            self.__elements[index] = copy.deepcopy(starting_sequence[index])
 
         if not isinstance(starting_sequence,Sequence):
             raise ValueError("starting_sequence must be a valid sequence type")
