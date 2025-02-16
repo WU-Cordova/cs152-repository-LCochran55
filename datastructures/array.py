@@ -53,7 +53,7 @@ class Array(IArray[T]):
                 stop = slice.stop
                 step = slice.step
 
-                if start<self.__logical_size-1 or start>-(self.__logical_size-1) and stop <= self.__logical_size-1 or stop >= -(self.__logical_size-1):
+                if start<self.__logical_size-1 or start>-(self.__logical_size)-1 and stop <= self.__logical_size-1 or stop >= -(self.__logical_size-1):
                     return Array(starting_sequence=self.__elements[index].tolist(),data_type=self.__data_type) # item if its a slice
                 else:
                     raise IndexError("Your start or stop if out of range of your list")
