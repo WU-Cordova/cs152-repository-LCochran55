@@ -120,7 +120,9 @@ class Array(IArray[T]):
         # raise NotImplementedError('Equality not implemented.')
     
     def __iter__(self) -> Iterator[T]:
-        raise NotImplementedError('Iteration not implemented.')
+        for element in self.__elements:
+            yield element
+        # raise NotImplementedError('Iteration not implemented.')
 
     def __reversed__(self) -> Iterator[T]:
         #Slicing 
