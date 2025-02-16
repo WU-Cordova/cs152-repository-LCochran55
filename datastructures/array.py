@@ -52,8 +52,9 @@ class Array(IArray[T]):
                 start = slice.start
                 stop = slice.stop
                 step = slice.step
+                print(self.__logical_size)
 
-                if start<self.__logical_size-1 or start>-(self.__logical_size)-1 and stop <= self.__logical_size-1 or stop >= -(self.__logical_size-1):
+                if start<self.__logical_size-1 or start>-(self.__logical_size)-1 and stop <= self.__logical_size-1 or stop >= -(self.__logical_size):
                     return Array(starting_sequence=self.__elements[index].tolist(),data_type=self.__data_type) # item if its a slice
                 else:
                     raise IndexError("Your start or stop if out of range of your list")
@@ -155,7 +156,7 @@ class Array(IArray[T]):
         return '[' + ', '.join(str(item) for item in self) + ']'
     
     def __repr__(self) -> str:
-        return f'Array {self.__str__()}, Logical: {self.__logical_size}, Physical: {len(self.__physical_size)}, type: {self.__data_type}'
+        return f'Array {self.__str__()}, Logical: {self.__logical_size}, Physical: {len(self.__elements)}, type: {self.__data_type}'
     
 
 if __name__ == '__main__':
