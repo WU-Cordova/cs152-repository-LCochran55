@@ -66,28 +66,30 @@ class Array(IArray[T]):
                 else:
                     raise IndexError("Index is out of range")
                 #check if index in bounds
-                #if not raise an exception
+                #if not raise an exceptio
 
-
-            raise NotImplementedError('Indexing not implemented.')
+            # raise NotImplementedError('Indexing not implemented.')
     
     def __setitem__(self, index: int, item: T) -> None:
         #check if index if out of bounds or iem is right type
         self.__elements[index] = item
-        raise NotImplementedError('Indexing not implemented.')
+        # raise NotImplementedError('Indexing not implemented.')
 
     def append(self, data: T) -> None:
+        self.__elements.append(data)
 
-        raise NotImplementedError('Append not implemented.')
+        # raise NotImplementedError('Append not implemented.')
     
     def __grow(self,new_size:int) -> None:
+
+        if(self.__elements):
         #for append methods
 
         #If array doesnt need to grow, exit
         #Create a new numpy array with new size
         #copy over the elementsfrom the crrent numpy array to the new one
         #set the current numpy array to the new one
-        pass
+            pass
 
     def append_front(self, data: T) -> None:
         #append item tofront of list
@@ -104,7 +106,8 @@ class Array(IArray[T]):
         raise NotImplementedError('Pop front not implemented.')
 
     def __len__(self) -> int: 
-        raise NotImplementedError('Length not implemented.')
+        return self.__logical_size
+        # raise NotImplementedError('Length not implemented.')
 
     def __eq__(self, other: object) -> bool:
         # for loop thru logical size
