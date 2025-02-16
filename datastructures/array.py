@@ -36,7 +36,7 @@ class Array(IArray[T]):
             if not isinstance(starting_sequence[index],self.__data_type):
                 raise TypeError("items in starting_sequence must be the same data type")
             
-        for item in starting_sequence
+        for item in starting_sequence:
             if not isinstance(item,self.__data_type):
                 raise TypeError(f"Item{repr(item)} is not of type {str(data_type)}")
 
