@@ -20,12 +20,13 @@ from datastructures.iarray import IArray, T
 class Array(IArray[T]):  
 
     def __init__(self, starting_sequence: Sequence[T]=[], data_type: type=object) -> None: 
-        self.__logical_size: int = len(starting_sequence)
-        self.__physical_size: int = self.__logical_size
-        self.__data_type: type = data_type
 
         if not isinstance(starting_sequence,Sequence):
             raise ValueError("starting_sequence must be a valid sequence type")
+        
+        self.__logical_size: int = len(starting_sequence)
+        self.__physical_size: int = self.__logical_size
+        self.__data_type: type = data_type
         
         for index in range(self.__logical_size):
             if not isinstance(starting_sequence[index],self.__data_type):
@@ -47,21 +48,23 @@ class Array(IArray[T]):
     def __getitem__(self, index: int | slice) -> T | Sequence[T]:
             #make sure item exists 
             if isinstance(index,slice):
-                start = slice.start
-                stop = slice.stop
-                step = slice.step
+                start,stop,step = index.indices(self.__logical_size)
                 
-                logSize = self.__logical_size
-
-                if slice.start<logSize-1: #or start>-(logSize)-1 and stop <= logSize-1 or stop >= -(logSize):
-                    return Array(starting_sequence=self.__elements[index].tolist(),data_type=self.__data_type) # item if its a slice
+                #Check if start and stop are in bounds of the array
+                if(start != None and -(self.__logical_size)<start<self.__logical_size):
+                    pass
                 else:
-                    raise IndexError("Your start or stop if out of range of your list")
-                #check if start abd sto[ are in nobund]
-                #if nto raise an exception  
+                    raise IndexError("Your start or stop are out of range of your list")
+                if(start != None and -(self.__logical_size)<stop<self.__logical_size):
+                    pass
+                else:
+                    raise IndexError("Your start or stop are out of range of your list")
+                
+                itemsToReturn = self.__elements[index]
+                return Array(starting_sequence=itemsToReturn[index].tolist(),data_type=self.__data_type) # item if its a slice
             
             elif isinstance(index,int):
-                if(index<=self.__logical_size-1):
+                if(-(self.__logical_size)<index<self.__logical_size):
                     return self.__elements[index] #item if index is an int
                 else:
                     raise IndexError("Index is out of range")
