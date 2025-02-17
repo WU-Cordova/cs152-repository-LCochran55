@@ -105,6 +105,15 @@ class Array(IArray[T]):
         #Create a new numpy array with new size
         #copy over the elementsfrom the crrent numpy array to the new one
         #set the current numpy array to the new one
+    def __shrink(self):
+        if(self.__logical_size == self.__physical_size//2):
+            self.__physical_size//2
+            self.__newElements= np.empty(self.__physical_size,dtype=self.__data_type)
+            for index in range(self.__physical_size):
+                self.__newElements[index] = copy.deepcopy(self.__elements)
+            self.__elements = self.__newElements
+        else:
+            exit
 
     def append_front(self, data: T) -> None:
         listElements = self.__elements.tolist()
@@ -119,10 +128,14 @@ class Array(IArray[T]):
 
     def pop(self) -> None:
         self.__delitem__(self.__elements,self.__logical_size-1)
+        self.__logical_size -= 1
+        self.__shrink()
         # raise NotImplementedError('Pop not implemented.')
     
     def pop_front(self) -> None:
         self.__delitem__(self.__elements,0)
+        self.__logical_size -= 1
+        self.__shrink()
         # raise NotImplementedError('Pop front not implemented.')
 
     def __len__(self) -> int: 
@@ -145,9 +158,7 @@ class Array(IArray[T]):
         # raise NotImplementedError('Iteration not implemented.')
 
     def __reversed__(self) -> Iterator[T]:
-        arrayList = self.__elements.tolist()
-        reversedList = arrayList.reverse()
-        reversedArray = np.array(reversedList)
+        reversedArray = self.__elements[::-1]
         return iter(reversedArray)
 
         # self.__elements = np.array(reversedList)
