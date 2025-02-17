@@ -24,11 +24,6 @@ class Array(IArray[T]):
         self.__physical_size: int = self.__logical_size
         self.__data_type: type = data_type
 
-        self.__elements = np.empty(self.__logical_size, dtype=self.__data_type)
-
-        for index in range(self.__logical_size):
-            self.__elements[index] = copy.deepcopy(starting_sequence[index])
-
         if not isinstance(starting_sequence,Sequence):
             raise ValueError("starting_sequence must be a valid sequence type")
         
@@ -39,6 +34,12 @@ class Array(IArray[T]):
         for item in starting_sequence:
             if not isinstance(item,self.__data_type):
                 raise TypeError(f"Item{repr(item)} is not of type {str(data_type)}")
+        
+        self.__elements = np.empty(self.__logical_size, dtype=self.__data_type)
+            
+        for index in range(self.__logical_size):
+            self.__elements[index] = copy.deepcopy(starting_sequence[index])
+            
 
 
 
@@ -52,9 +53,10 @@ class Array(IArray[T]):
                 start = slice.start
                 stop = slice.stop
                 step = slice.step
-                print(self.__logical_size)
+                
+                logSize = self.__logical_size
 
-                if start<self.__logical_size-1 or start>-(self.__logical_size)-1 and stop <= self.__logical_size-1 or stop >= -(self.__logical_size):
+                if slice.start<logSize-1: #or start>-(logSize)-1 and stop <= logSize-1 or stop >= -(logSize):
                     return Array(starting_sequence=self.__elements[index].tolist(),data_type=self.__data_type) # item if its a slice
                 else:
                     raise IndexError("Your start or stop if out of range of your list")
@@ -68,6 +70,8 @@ class Array(IArray[T]):
                     raise IndexError("Index is out of range")
                 #check if index in bounds
                 #if not raise an exceptio
+            else:
+                raise TypeError("Index is not an int or slice")
 
             # raise NotImplementedError('Indexing not implemented.')
     
@@ -103,10 +107,10 @@ class Array(IArray[T]):
         raise NotImplementedError('Append front not implemented.')
 
     def pop(self) -> None:
-        #self.__delitem__(self.__logical_size+-count-1)
+        self.__delitem__(self.__elements,self.__logical_size-1)
         #or
         #         #del self[]
-        raise NotImplementedError('Pop not implemented.')
+        # raise NotImplementedError('Pop not implemented.')
     
     def pop_front(self) -> None:
         raise NotImplementedError('Pop front not implemented.')
@@ -131,15 +135,18 @@ class Array(IArray[T]):
         # raise NotImplementedError('Iteration not implemented.')
 
     def __reversed__(self) -> Iterator[T]:
-        reversedList = self.__elements.tolist().reverse()
+        arrayList = self.__elements.tolist()
+        reversedList = arrayList.reverse()
+        reversedArray = np.array(reversedList)
+        return iter(reversedArray)
 
+        # self.__elements = np.array(reversedList)
         #Slicing 
-        raise
 
     def __delitem__(self, index: int) -> None:
        #deletes item at the index\
        # .// capacity (floor)
-       raise NotImplementedError('Delete not implemented.')
+       self.__elements = np.delete(self.__elements,index)
 
     def __contains__(self, item: Any) -> bool:
         return np.isin(item, self.__elements)
@@ -149,8 +156,11 @@ class Array(IArray[T]):
 
     def clear(self) -> None:
         #make new empty array  and reassign
-        emptyArray = np.empty()
-        raise NotImplementedError('Clear not implemented.')
+        self.__logical_size: int = 0
+        self.__physical_size: int = 0
+
+        self.__elements = np.empty(self.__logical_size)
+        # raise NotImplementedError('Clear not implemented.')
 
     def __str__(self) -> str:
         return '[' + ', '.join(str(item) for item in self) + ']'
