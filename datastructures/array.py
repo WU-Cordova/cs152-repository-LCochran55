@@ -39,9 +39,6 @@ class Array(IArray[T]):
             
         for index in range(self.__logical_size):
             self.__elements[index] = copy.deepcopy(starting_sequence[index])
-            
-
-
 
     @overload
     def __getitem__(self, index: int) -> T: ...
@@ -86,34 +83,47 @@ class Array(IArray[T]):
     def append(self, data: T) -> None:
         listElements = self.__elements.tolist()
         listElements.append(data)
-        self.__elemets = np.array(listElements)
+        self.__elements = np.array(listElements)
+        self.__logical_size += 1
+        self.__grow()
 
         # raise NotImplementedError('Append not implemented.')
     
-    def __grow(self,new_size:int) -> None:
+    def __grow(self) -> None:
 
-        if(self.__elements):
+        if(self.__logical_size == self.__physical_size):
+            self.__physical_size *= 2
+            self.__newElements= np.empty(self.__physical_size,dtype=self.__data_type)
+            for index in range(self.__logical_size):
+                self.__newElements[index] = copy.deepcopy(self.__elements)
+            self.__elements = self.__newElements
+        else:
+            exit
         #for append methods
 
         #If array doesnt need to grow, exit
         #Create a new numpy array with new size
         #copy over the elementsfrom the crrent numpy array to the new one
         #set the current numpy array to the new one
-            pass
 
     def append_front(self, data: T) -> None:
+        listElements = self.__elements.tolist()
+        listElements.insert(0,data)
+        self.__elements = np.array(listElements)
+        self.__logical_size += 1
+        self.__grow()
+
         #append item tofront of list
         #Groaw as needed
         raise NotImplementedError('Append front not implemented.')
 
     def pop(self) -> None:
         self.__delitem__(self.__elements,self.__logical_size-1)
-        #or
-        #         #del self[]
         # raise NotImplementedError('Pop not implemented.')
     
     def pop_front(self) -> None:
-        raise NotImplementedError('Pop front not implemented.')
+        self.__delitem__(self.__elements,0)
+        # raise NotImplementedError('Pop front not implemented.')
 
     def __len__(self) -> int: 
         return self.__logical_size
