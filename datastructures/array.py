@@ -48,20 +48,21 @@ class Array(IArray[T]):
     def __getitem__(self, index: int | slice) -> T | Sequence[T]:
             #make sure item exists 
             if isinstance(index,slice):
-                start,stop,step = index.indices(self.__logical_size)
+                start,stop,step = index.indices(self.__logical_size-1)
                 
                 #Check if start and stop are in bounds of the array
-                if(start != None and -(self.__logical_size)<start<self.__logical_size):
+                if(start is not None and -(self.__logical_size)<start<self.__logical_size):
+                    
                     pass
                 else:
                     raise IndexError("Your start or stop are out of range of your list")
-                if(start != None and -(self.__logical_size)<stop<self.__logical_size):
+                if(start is not None and -(self.__logical_size)<stop<self.__logical_size):
                     pass
                 else:
                     raise IndexError("Your start or stop are out of range of your list")
-                
-                itemsToReturn = self.__elements[index]
-                return Array(starting_sequence=itemsToReturn[index].tolist(),data_type=self.__data_type) # item if its a slice
+                # arr = Array(starting_sequence=itemsToReturn[index].tolist(),data_type=self.__data_type)
+                return Array(starting_sequence=self.__elements.tolist()[index],data_type=self.__data_type) # item if its a slice
+            
             
             elif isinstance(index,int):
                 if(-(self.__logical_size)<index<self.__logical_size):
