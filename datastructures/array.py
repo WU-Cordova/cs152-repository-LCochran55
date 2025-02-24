@@ -52,7 +52,6 @@ class Array(IArray[T]):
                 
                 #Check if start and stop are in bounds of the array
                 if(start is not None and -(self.__logical_size)<start<self.__logical_size):
-                    
                     pass
                 else:
                     raise IndexError("Your start or stop are out of range of your list")
