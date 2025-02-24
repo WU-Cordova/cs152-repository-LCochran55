@@ -1,6 +1,6 @@
 from __future__ import annotations
 import os
-from typing import Iterator, Sequence
+from typing import Iterator, List, Sequence
 
 from datastructures.iarray import IArray
 from datastructures.array import Array
@@ -99,7 +99,7 @@ class Array2D(IArray2D[T]):
                 raise ValueError("items in starting_sequence must be the same data type")
             
         for item in starting_sequence:
-            if not isinstance(item,self.__data_type):
+            if not isinstance(item,data_type):
                 raise TypeError(f"Item{repr(item)} is not of type {str(data_type)}")
         
         for item in starting_sequence:
@@ -107,7 +107,7 @@ class Array2D(IArray2D[T]):
             if len(item) != rowLen:
                 raise ValueError("items in starting_sequence must be the same length")
             
-        self.__data_type = data_type
+        self.data_type = data_type
         self.rows_len = len(starting_sequence)
         self.cols_len = len(starting_sequence[0])
 
@@ -127,11 +127,18 @@ class Array2D(IArray2D[T]):
         # 	so that each instance is unique (important for complex objects).
         # 2. Return an Array2D instance with your list from step 1 and data_type.
 
-        tempList = list()[rows][cols]
-        # raise NotImplementedError('Array2D.empty not implemented.')
+        py_list2d: List[List[T]] = []
+        
+        for row in range(rows):
+            py_list2d.append([])
+            for col in range(cols):
+                py_list2d[row].append(data_type())
+
+        return Array2D(starting_sequence=py_list2d,data_type=data_type)
+
 
     def __getitem__(self, row_index: int) -> Array2D.IRow[T]: 
-        return Array2D.Row(row_index=row_index, self.elements2d, self.cols_len)
+        # return Array2D.Row(row_index=row_index, self.elements2d, self.cols_len)
 
     def __iter__(self) -> Iterator[Sequence[T]]: 
         # This is your forward iterator for row data!
@@ -141,7 +148,6 @@ class Array2D(IArray2D[T]):
                 yield self[row_index]
 
     def __reversed__(self):
-         
          for row_index in range (self.rows_len[::-1]):
                 yield self[row_index]
             # This is your backward iterator for row data!
@@ -150,7 +156,8 @@ class Array2D(IArray2D[T]):
         # raise NotImplementedError('Array2D.__reversed__ not implemented.')
     
     def __len__(self): 
-        raise NotImplementedError('Array2D.__len__ not implemented')
+        return self.rows_len
+        # raise NotImplementedError('Array2D.__len__ not implemented')
                                   
     def __str__(self) -> str: 
         return f'[{", ".join(f"{str(row)}" for row in self)}]'
