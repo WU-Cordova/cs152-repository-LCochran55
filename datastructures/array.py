@@ -55,7 +55,7 @@ class Array(IArray[T]):
                     pass
                 else:
                     raise IndexError("Your start or stop are out of range of your list")
-                if(start is not None and -(self.__logical_size)<stop<self.__logical_size):
+                if(stop is not None and -(self.__logical_size)<stop<self.__logical_size):
                     pass
                 else:
                     raise IndexError("Your start or stop are out of range of your list")

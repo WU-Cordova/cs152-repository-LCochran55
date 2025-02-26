@@ -18,7 +18,8 @@ class Array2D(IArray2D[T]):
             self.array: IArray = array
             self.num_columns: int = num_columns
 
-            self.__data_type = type(self.__array[0])
+            self.__data_type = type(self.array[0])
+            
 
         def map_index(self, row_index: int, column_index: int) -> int:
             return row_index*self.num_columns+column_index
@@ -31,8 +32,8 @@ class Array2D(IArray2D[T]):
 
             index: int =  self.map_index(self.row_index, column_index)
 
-            if column_index > self.num_columns:
-                raise IndexError("Index is more than total columns")
+            if column_index >= self.num_columns:
+                raise IndexError
             
             return self.array[index]
 
@@ -45,19 +46,29 @@ class Array2D(IArray2D[T]):
             # 3. Convert the `row_index` and `column_index` into a 1D `index`
             # 4. Set array[index] = value  
 
+            if column_index >= self.num_columns:
+                raise IndexError
             
-            raise NotImplementedError('Row.__setitem__ not implemented.')
-        
+            if not isinstance(type(value),self.__data_type):
+                raise TypeError
+            
+            py_list = []
+            for row in range(self.rows_index):
+                for col in range(self.num_columns):
+                    py_list.append(self.array[row][col])
+
+            self.array[column_index] = value
+
+            
+
 
         def __iter__(self) -> Iterator[T]:
             # This is your forward iterator for column data!
             # 1. Loop row_index from 0 to `num_rows`
         	# 	and yield self[row_index] ⬅ uses Array2D __getitem__!
 
-            for row_index in range (self.__num_columns):
+            for row_index in range (self.num_columns):
                 yield self[row_index]
-
-            # raise NotImplementedError('Row.__iter__ not implemented.')
         
 
         def __reversed__(self) -> Iterator[T]:
@@ -65,7 +76,8 @@ class Array2D(IArray2D[T]):
             # 1. Loop row_index from (num_rows - 1) to 0
         	# and yield self[row_index] ⬅ uses Array2D __getitem__!
         
-            for row_index in range (self.__num_columns[::-1]):
+            for row_index in range (self.num_columns):
+                row_index
                 yield self[row_index]
 
             # raise NotImplementedError('Row.__reversed__ not implemented.')
@@ -96,23 +108,24 @@ class Array2D(IArray2D[T]):
             
         for index in range(len(starting_sequence)):
             if not isinstance(starting_sequence[index], Sequence):
-                raise ValueError("items in starting_sequence must be the same data type")
+                raise ValueError
             
-        for item in starting_sequence:
-            if not isinstance(item,data_type):
-                raise TypeError(f"Item{repr(item)} is not of type {str(data_type)}")
+        for row in starting_sequence:
+            for item in row:
+                if not isinstance(item,data_type):
+                    raise ValueError
         
         for item in starting_sequence:
             rowLen = len(starting_sequence)
             if len(item) != rowLen:
-                raise ValueError("items in starting_sequence must be the same length")
+                raise ValueError
             
         self.data_type = data_type
         self.rows_len = len(starting_sequence)
         self.cols_len = len(starting_sequence[0])
 
         py_list = []
-        for row in range(self.row_len):
+        for row in range(self.rows_len):
             for col in range(self.cols_len):
                 py_list.append(starting_sequence[row][col])
 
@@ -138,7 +151,7 @@ class Array2D(IArray2D[T]):
 
 
     def __getitem__(self, row_index: int) -> Array2D.IRow[T]: 
-        # return Array2D.Row(row_index=row_index, self.elements2d, self.cols_len)
+        return Array2D.Row(row_index, self.elements2d, self.cols_len)
 
     def __iter__(self) -> Iterator[Sequence[T]]: 
         # This is your forward iterator for row data!
@@ -148,7 +161,7 @@ class Array2D(IArray2D[T]):
                 yield self[row_index]
 
     def __reversed__(self):
-         for row_index in range (self.rows_len[::-1]):
+         for row_index in range (self.rows_len,0,-1):
                 yield self[row_index]
             # This is your backward iterator for row data!
             # 1. Loop from (row_index - 1) to 0
