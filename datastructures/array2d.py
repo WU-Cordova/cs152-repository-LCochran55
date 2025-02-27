@@ -56,11 +56,8 @@ class Array2D(IArray2D[T]):
             for row in (self.array[column_index]):
                 py_list.append(row)
             py_list
-        
-
+            pass
             
-
-
         def __iter__(self) -> Iterator[T]:
             # This is your forward iterator for column data!
             # 1. Loop row_index from 0 to `num_rows`
