@@ -18,7 +18,7 @@ class Array2D(IArray2D[T]):
             self.array: IArray = array
             self.num_columns: int = num_columns
 
-            self.__data_type = type(self.array[0])
+            self.data_type = type(self.array[0])
             
 
         def map_index(self, row_index: int, column_index: int) -> int:
@@ -49,15 +49,14 @@ class Array2D(IArray2D[T]):
             if column_index >= self.num_columns:
                 raise IndexError
             
-            if not isinstance(type(value),self.__data_type):
-                raise TypeError
+            # if not isinstance(type(value),self.__data_type):
+            #     raise TypeError
             
             py_list = []
-            for row in range(self.rows_index):
-                for col in range(self.num_columns):
-                    py_list.append(self.array[row][col])
-
-            self.array[column_index] = value
+            for row in (self.array[column_index]):
+                py_list.append(row)
+            py_list
+        
 
             
 
@@ -161,7 +160,7 @@ class Array2D(IArray2D[T]):
                 yield self[row_index]
 
     def __reversed__(self):
-         for row_index in range (self.rows_len,0,-1):
+         for row_index in range (self.rows_len-1,-1,-1):
                 yield self[row_index]
             # This is your backward iterator for row data!
             # 1. Loop from (row_index - 1) to 0

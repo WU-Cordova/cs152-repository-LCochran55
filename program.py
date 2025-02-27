@@ -1,12 +1,20 @@
 
-from datastructures.bag import Bag
+
+def remove_stars(s: str):
+
+    while s.count("*") != -1:
+        starIndex = s.index("*")
+        for i in range(0,starIndex):
+            if(s[starIndex-1].equals("*")):
+                s.pop(starIndex-1)
+            s.pop(starIndex)
+    return s
+
+            
+    
+
 
 def main():
-    
-    print("Hello, World!")
-    bag = Bag()
-    bag.add("apple")
-    print(bag.distinct_items())
-    print(bag.count("apple"))
+    pass
 
-main()
+print(remove_stars("***aa*b**c*jj(*Djdhh*dniu)"))
