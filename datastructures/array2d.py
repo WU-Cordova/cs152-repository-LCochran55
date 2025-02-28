@@ -18,7 +18,6 @@ class Array2D(IArray2D[T]):
             self.num_columns: int = num_columns
 
             self.data_type = type(self.array[0])
-            
 
         def map_index(self, row_index: int, column_index: int) -> int:
             return row_index*self.num_columns+column_index
@@ -35,8 +34,6 @@ class Array2D(IArray2D[T]):
                 raise IndexError
             
             return self.array[index]
-
-            # raise NotImplementedError('Row.__getitem__ not implemented.')
         
         def __setitem__(self, column_index: int, value: T) -> None:
             #This is the second bracket operator. At this point you have row and column!
@@ -48,14 +45,10 @@ class Array2D(IArray2D[T]):
             if column_index >= self.num_columns:
                 raise IndexError
             
-            # if not isinstance(type(value),self.__data_type):
-            #     raise TypeError
-            
-            py_list = []
-            for row in (self.array[column_index]):
-                py_list.append(row)
-            py_list
-            pass
+            index: int =  self.map_index(self.row_index, column_index)
+            self.array[index] = value
+
+                
             
         def __iter__(self) -> Iterator[T]:
             # This is your forward iterator for column data!
