@@ -3,7 +3,8 @@ from projects.project2.grid import Grid
 from projects.project2.gameController import GameController
 
 def main():
-    grid = Grid(10,10)
+    file = open("Testgrid.txt", "r")
+    grid = Grid(file)
     print("ABCD")
     game_controller = GameController(grid)
     game_controller.run()
