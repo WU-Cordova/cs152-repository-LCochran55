@@ -3,9 +3,7 @@
 
 
 def main():
-    from datastructures.array2d import Array2D
-    empty3x3 = Array2D([[1, 2, 3], [4, 5, 6], [7, 8, 9]], data_type=int)
-    empty3x3[1][1] = 42
+        print(f"\n _____                  _____ ___\n|   __|___ _____ ___   |     |  _|\n|  |  | .'|     | -_|  |  |  |  _|\n|_____|__,|_|_|_|___|  |_____|_|\n         __    _ ___\n        |  |  |_|  _|___\n        |  |__| |  _| -_|\n        |_____|_|_| |___|\n\n           GAME MODES\n1) Automatic mode; Runs all on its own!\n2) Manual Mode; Allows for user paced generation!")
 
 main()
 

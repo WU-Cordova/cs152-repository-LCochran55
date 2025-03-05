@@ -26,7 +26,7 @@ class Array(IArray[T]):
         
         self.__logical_size: int = len(starting_sequence)
         self.__physical_size: int = self.__logical_size
-        self.__data_type: type = data_type
+        self.__data_type = data_type
         
         for index in range(self.__logical_size):
             if not isinstance(starting_sequence[index],self.__data_type):
@@ -77,7 +77,7 @@ class Array(IArray[T]):
     
     def __setitem__(self, index: int, item: T) -> None:
         #check if index if out of bounds or iem is right type
-        if(type(item) == self.__data_type):
+        if(isinstance(item,self.__data_type)):
             self.__elements[index] = item
         else:
             raise TypeError("Item does not contain same type as Array")

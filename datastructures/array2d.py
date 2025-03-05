@@ -103,10 +103,10 @@ class Array2D(IArray2D[T]):
                 if not isinstance(item,data_type):
                     raise ValueError
         
-        for item in starting_sequence:
-            rowLen = len(starting_sequence)
-            if len(item) != rowLen:
-                raise ValueError
+        # for item in starting_sequence:
+        #     rowLen = len(starting_sequence)
+        #     if len(item) != rowLen:
+        #         raise ValueError
             
         self.data_type = data_type
         self.rows_len = len(starting_sequence)

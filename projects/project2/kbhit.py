@@ -16,7 +16,6 @@ else:
     import atexit
     from select import select
 
-
 class KBHit:
 
     def __init__(self):
