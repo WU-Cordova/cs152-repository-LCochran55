@@ -95,7 +95,7 @@ class Grid():
             print()
 
     def checkHistory(self) -> None:
-        pass
+        if(self.grid == self.)
 
             
 

@@ -1,6 +1,6 @@
 from time import sleep
 from projects.project2.grid import Grid
-from projects.project2.grid import KBHit
+from projects.project2.kbhit import KBHit
 
 class GameController:
     def __init__(self,grid:Grid):
@@ -21,4 +21,5 @@ class GameController:
                 if key == 'q':
                     print("Quitting now.")
                     return
-            self.grid = self.grid.next_generation()
+            self.grid.next_generation()
+            self.grid.display()

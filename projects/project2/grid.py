@@ -1,10 +1,8 @@
-import random
 from __future__ import annotations
-
 from datastructures.array2d import Array2D
 from projects.project2.cell import Cell
-
 import copy
+import random
 
 
 class Grid:
@@ -26,8 +24,8 @@ class Grid:
             self.readFile(self.file)
         else:
             #Populates the Array2D with randomly selected dead or alive cells
-            for row in rows:
-                for col in cols:
+            for row in range(self.rows):
+                for col in range(self.cols):
                     self.grid[row][col].is_alive = random.choice([True,False])
 
 
@@ -71,7 +69,7 @@ class Grid:
 
 
 
-    def get_neighbors(self,row:int,col:int) -> int:
+    def get_Neighbors(self,row:int,col:int) -> int:
         count = 0
         for i in range(row-1,row+1):
             if(i<self.rows and i>=0):
@@ -85,25 +83,25 @@ class Grid:
 
     def declareLifeorDeath(self, row: int, col: int) -> None:
         if(self.grid[row][col].is_alive == True):
-            if(self.grid(row,col)>=2):
+            if(self.get_Neighbors(row,col)>=2):
                 self.tempGrid[row][col].is_alive = False
             else:
                 self.tempGrid[row][col].is_alive = False
         else:
-            if(self.getNeighbors(row,col)>= 3):
+            if(self.get_Neighbors(row,col)>= 3):
                 self.tempGrid[row][col].is_alive = True
             else:
                 self.tempGrid[row][col].is_alive = False
 
 
-    def copyTemptoMain(self) -> Grid:
-        for r in self.grid:
-            for c in r:
+    def copyTemptoMain(self) -> None:
+        for r in range(self.rows):
+            for c in range(self.cols):
                 self.grid[r][c] = copy.deepcopy((self.tempGrid[r][c]))
 
-        self.history.append(copy(self.tempGrid))
-        return self.grid
-    
+        self.history.append(copy.copy(self.tempGrid))
+        print(f"HISTORY: {self.history}")
+
 
     def next_generation(self) -> Grid:
         for r in range(self.rows):
@@ -111,7 +109,7 @@ class Grid:
                 self.declareLifeorDeath(r, c)
 
         self.copyTemptoMain()
-        self.display()
+        return self.grid
 
     
     def checkHistory(self) -> None:
