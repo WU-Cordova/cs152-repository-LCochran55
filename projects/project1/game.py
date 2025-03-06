@@ -59,7 +59,7 @@ class Game:
                                 case "J" | "K" | "Q":
                                     dealerScore+=10
                                 case _:
-                                    dealerScore+=10
+                                    dealerScore+=self.__dealer.returnHand()[hits].card_face.value
                         hits +=1
 
                         print(f"\n Dealer's hand: {self.__dealer.returnHand()[0:hits]} [Hidden] | Score: {dealerScore}\n Players hand: {self.__player.returnHand()} | Score: {self.__player.totalHand()}")

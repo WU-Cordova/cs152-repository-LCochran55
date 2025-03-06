@@ -7,19 +7,23 @@ class GameController:
         self.grid = grid
 
     def run(self):
+        self.grid.display() 
+
+        self.grid.next_generation()
         self.grid.display()
 
-        print("Press q to quit")
 
-        kbhit = KBHit()
+        # print("Press q to quit")
 
-        while True:
-            sleep(1)
-            if kbhit.kbhit():
-                key = kbhit.getch()
+        # kbhit = KBHit()
 
-                if key == 'q':
-                    print("Quitting now.")
-                    return
-            self.grid.next_generation()
-            self.grid.display()
+        # while True:
+        #     sleep(1)
+        #     if kbhit.kbhit():
+        #         key = kbhit.getch()
+
+        #         if key == 'q':
+        #             print("Quitting now.")
+        #             return
+        #     self.grid.next_generation()
+        #     self.grid.display()
