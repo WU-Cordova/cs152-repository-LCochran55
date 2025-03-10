@@ -129,7 +129,7 @@ class Grid:
             prevPreviousArray = self.history[0] #Oldest grid in history
             for r in range(self.rows):
                 for c in range(self.cols):
-                    if(not(currentArray[r][c] == previousArray[r][c]) and not(currentArray[r][c] == prevPreviousArray[r][c])):
+                    if(not(currentArray[r][c] is not previousArray[r][c]) and (currentArray[r][c] is not prevPreviousArray[r][c])):
                         return False #Will return false if grid history is unique
             return True
         else:

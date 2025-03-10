@@ -25,7 +25,6 @@ class GameController:
         if mode == 1:
             self.grid.display()
             while(self.grid.checkHistory() == False):
-                self.grid.checkHistory()
                 time.sleep(1)
                 self.grid.next_generation() #Generates next generation
                 self.grid.display() #Displays the grid
