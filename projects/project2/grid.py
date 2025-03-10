@@ -106,15 +106,16 @@ class Grid:
         #Copies the updated temporary grid into the main grid
         for r in range(self.rows):
             for c in range(self.cols):
-                self.grid[r][c] = copy.deepcopy((self.tempGrid[r][c]))
+                self.grid[r][c] = copy.deepcopy(self.tempGrid[r][c])
 
 
     def next_generation(self) -> Grid:
-        self.history.append(self.grid) #Appends the current grid to the history
-        #Generates the next generation
+        
+        self.history.append(copy.deepcopy(self.grid)) #Adds the grid to the history
+
         for r in range(self.rows):
-            for c in range(self.cols):
-                self.declareLifeorDeath(r, c)
+            for c in range(self.cols): #loops through rows and cols
+                self.declareLifeorDeath(r, c) #Decides if the current cell is alive or dead
         
         self.copyTemptoMain()
         return self.grid
@@ -129,7 +130,7 @@ class Grid:
             prevPreviousArray = self.history[0] #Oldest grid in history
             for r in range(self.rows):
                 for c in range(self.cols):
-                    if(not(currentArray[r][c] is not previousArray[r][c]) and (currentArray[r][c] is not prevPreviousArray[r][c])):
+                    if(not(currentArray[r][c] == previousArray[r][c]) and not(currentArray[r][c] == prevPreviousArray[r][c])):
                         return False #Will return false if grid history is unique
             return True
         else:
