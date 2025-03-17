@@ -141,11 +141,6 @@ class Array(IArray[T]):
         self.__shrink()
         # raise NotImplementedError('Pop front not implemented.')
     
-    def delete(self,index:int) -> None:
-        self.__delitem__(self.__elements,index)
-        self.__logical_size -= 1
-        self.__shrink()
-        # raise NotImplementedError('Pop front not implemented.')
 
     def __len__(self) -> int: 
         return self.__logical_size

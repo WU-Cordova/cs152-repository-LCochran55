@@ -41,7 +41,7 @@ class CircularQueue(IQueue[T]):
         for i in range(self.maxsize):
             sequence.append(data_type())
 
-        self.___queue = Array(starting_sequence=sequence,data_type=data_type)
+        self.__queue = Array(starting_sequence=sequence,data_type=data_type)
         
         # raise NotImplementedError
 
@@ -70,7 +70,7 @@ class CircularQueue(IQueue[T]):
             Raises:
                 IndexError: If the queue is full
         '''
-        if self.full():
+        if self.full:
             raise IndexError("OVERFLOW")
         next_position = (self.__front + self.__count)%self.__maxsize
         self.__count +=1
@@ -101,12 +101,12 @@ class CircularQueue(IQueue[T]):
             Raises:
                 IndexError: If the queue is empty
         '''
-        if self.empty():
+        if self.empty:
             raise IndexError("UNDERFLOW")
         item_to_return = self.__queue[self.__front]
         self.__front = (self.__front + 1)% self.__maxsize
         self.__count-=1
-        self.__queue.delete(self.__front)
+        
         return item_to_return
 
     def clear(self) -> None:
@@ -157,7 +157,7 @@ class CircularQueue(IQueue[T]):
             Raises:
                 IndexError: If the queue is empty
         '''
-        if self.empty():
+        if self.empty:
             raise IndexError("UNDERFLOW")
         return self.__queue[self.__front]
 
@@ -256,7 +256,7 @@ class CircularQueue(IQueue[T]):
             Returns:
                 True if the queue is empty, False otherwise
         '''
-        return True if self.__count >0 else False
+        return True if self.__count == 0 else False
     
     @property
     def maxsize(self) -> int:
@@ -337,7 +337,7 @@ class CircularQueue(IQueue[T]):
             Returns:
                 The number of items in the queue
         '''
-        raise NotImplementedError
+        return self.__count
 
     def __str__(self) -> str:
         ''' Returns a string representation of the CircularQueue
