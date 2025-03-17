@@ -31,7 +31,19 @@ class CircularQueue(IQueue[T]):
                 maxsize: The maximum size of the queue
                 data_type: The type of the elements in the queue
         '''
-        raise NotImplementedError
+        self.__maxsize = maxsize
+        self.__data_type = data_type
+        self.__front = 0
+        self.__count = 0
+
+        sequence = []
+
+        for i in range(self.maxsize):
+            sequence.append(data_type())
+
+        self.___queue = Array(starting_sequence=sequence,data_type=data_type)
+        
+        # raise NotImplementedError
 
     def enqueue(self, item: T) -> None:
         ''' Adds an item to the rear of the queue
@@ -58,7 +70,11 @@ class CircularQueue(IQueue[T]):
             Raises:
                 IndexError: If the queue is full
         '''
-        raise NotImplementedError
+        if self.full():
+            raise IndexError("OVERFLOW")
+        next_position = (self.__front + self.__count)%self.__maxsize
+        self.__count +=1
+        self.__queue[next_position] = item
 
     def dequeue(self) -> T:
         ''' Removes and returns the item at the front of the queue
@@ -85,7 +101,13 @@ class CircularQueue(IQueue[T]):
             Raises:
                 IndexError: If the queue is empty
         '''
-        raise NotImplementedError
+        if self.empty():
+            raise IndexError("UNDERFLOW")
+        item_to_return = self.__queue[self.__front]
+        self.__front = (self.__front + 1)% self.__maxsize
+        self.__count-=1
+        self.__queue.delete(self.__front)
+        return item_to_return
 
     def clear(self) -> None:
         ''' Removes all items from the queue 
@@ -135,7 +157,9 @@ class CircularQueue(IQueue[T]):
             Raises:
                 IndexError: If the queue is empty
         '''
-        raise NotImplementedError
+        if self.empty():
+            raise IndexError("UNDERFLOW")
+        return self.__queue[self.__front]
 
     @property
     def full(self) -> bool:
@@ -184,7 +208,7 @@ class CircularQueue(IQueue[T]):
             Returns:
                 True if the queue is full, False otherwise
         '''
-        raise NotImplementedError
+        return True if self.__count == self.maxsize else False
 
     @property
     def empty(self) -> bool:
@@ -232,7 +256,7 @@ class CircularQueue(IQueue[T]):
             Returns:
                 True if the queue is empty, False otherwise
         '''
-        raise NotImplementedError
+        return True if self.__count >0 else False
     
     @property
     def maxsize(self) -> int:
@@ -246,7 +270,7 @@ class CircularQueue(IQueue[T]):
             Returns:
                 The maximum size of the queue
         '''
-        raise NotImplementedError
+        return self.__maxsize
 
     def __eq__(self, other: object) -> bool:
         ''' Returns True if this CircularQueue is equal to another object, False otherwise
