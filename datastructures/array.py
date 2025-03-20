@@ -47,31 +47,18 @@ class Array(IArray[T]):
     def __getitem__(self, index: slice) -> Sequence[T]: ...
     def __getitem__(self, index: int | slice) -> T | Sequence[T]:
             #make sure item exists 
-            if isinstance(index,slice):
-                start,stop,step = index.indices(self.__logical_size-1)
-                
-                #Check if start and stop are in bounds of the array
-                if(start is not None and -(self.__logical_size)<start<self.__logical_size):
-                    pass
-                else:
-                    raise IndexError("Your start or stop are out of range of your list")
-                if(stop is not None and -(self.__logical_size)<stop<self.__logical_size):
-                    pass
-                else:
-                    raise IndexError("Your start or stop are out of range of your list")
-                # arr = Array(starting_sequence=itemsToReturn[index].tolist(),data_type=self.__data_type)
-                return Array(starting_sequence=self.__elements.tolist()[index],data_type=self.__data_type) # item if its a slice
-            
-            
-            elif isinstance(index,int):
-                if(-(self.__logical_size)<index<self.__logical_size):
-                    return self.__elements[index] #item if index is an int
-                else:
-                    raise IndexError("Index is out of range")
-                #check if index in bounds
-                #if not raise an exceptio
-            else:
-                raise TypeError("Index is not an int or slice")
+        if isinstance(index, int):
+            data = self.__elements[index]
+            return data.item() if isinstance(data, np.generic) else data
+
+        elif isinstance(index, slice):
+            data_list = []
+            for data in self.__elements[index]:
+                data_list.append(data.item() if isinstance(data, np.generic) else data)
+            return Array(starting_sequence=data_list, data_type=self.__data_type)
+
+        else:
+            raise TypeError("Was not an int or a slice")
 
             # raise NotImplementedError('Indexing not implemented.')
     
