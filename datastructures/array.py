@@ -112,8 +112,8 @@ class Array(IArray[T]):
         if(self.__logical_size == self.__physical_size//2):
             self.__physical_size//2
             self.__newElements= np.empty(self.__physical_size,dtype=self.__data_type)
-            for index in range(self.__physical_size):
-                self.__newElements[index] = copy.deepcopy(self.__elements)
+            # for index in range(self.__physical_size):
+            self.__newElements = copy.deepcopy(self.__elements)
             self.__elements = self.__newElements
         else:
             exit
@@ -127,19 +127,36 @@ class Array(IArray[T]):
 
         #append item tofront of list
         #Groaw as needed
-        raise NotImplementedError('Append front not implemented.')
+        # raise NotImplementedError('Append front not implemented.')
 
     def pop(self) -> None:
-        self.__delitem__(self.__elements,self.__logical_size-1)
+        listElements = self.__elements.tolist()
+        popped = listElements[self.__logical_size-1]
+        self.__delitem__(self.__logical_size-1)
         self.__logical_size -= 1
         self.__shrink()
+        return popped
+
         # raise NotImplementedError('Pop not implemented.')
     
     def pop_front(self) -> None:
-        self.__delitem__(self.__elements,0)
+        listElements = self.__elements.tolist()
+        popped = listElements[0]
+        self.__delitem__(0)
         self.__logical_size -= 1
         self.__shrink()
+        return popped
         # raise NotImplementedError('Pop front not implemented.')
+
+    def remove(self, index: int) -> None:
+        if index > self.__logical_size-1:
+            raise IndexError
+        listElements = self.__elements.tolist()
+        popped = listElements[index]
+        self.__delitem__(index)
+        self.__logical_size -= 1
+        self.__shrink()
+        return popped
     
 
     def __len__(self) -> int: 

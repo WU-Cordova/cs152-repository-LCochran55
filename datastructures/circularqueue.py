@@ -38,7 +38,7 @@ class CircularQueue(IQueue[T]):
 
         sequence = []
 
-        for i in range(self.maxsize):
+        for i in range(self.__maxsize):
             sequence.append(data_type())
 
         self.__queue = Array(starting_sequence=sequence,data_type=data_type)
@@ -106,6 +106,7 @@ class CircularQueue(IQueue[T]):
         item_to_return = self.__queue[self.__front]
         self.__front = (self.__front + 1)% self.__maxsize
         self.__count-=1
+        self.__queue.pop()
         
         return item_to_return
 
@@ -303,7 +304,12 @@ class CircularQueue(IQueue[T]):
             Returns:
                 True if this CircularQueue is equal to another object, False otherwise
         '''
-        raise NotImplementedError   
+        # if (self.__maxsize == other.maxsize()) and (self.front() == other.front()) and (self.pop() == other.pop) and (self.__data_type == type(other[0])):
+        #     frontOther = other.front()
+
+        #     for i in range(self.front, self.maxsize):
+        # Return False
+
     
     def __len__(self) -> int:
         ''' Returns the number of items in the queue

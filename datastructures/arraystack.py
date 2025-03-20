@@ -2,6 +2,7 @@ import os
 
 from datastructures.array import Array, T
 from datastructures.istack import IStack
+import copy
 
 class ArrayStack(IStack[T]):
     ''' ArrayStack class that implements the IStack interface. The ArrayStack is a 
@@ -23,7 +24,16 @@ class ArrayStack(IStack[T]):
                 max_size: int -- The maximum size of the stack. 
                 data_type: type -- The data type of the stack.       
         '''
-        raise NotImplementedError('ArrayStack is not implemented')
+        self.__maxsize = max_size
+        self.__data_type = data_type
+        self.__count = 0
+
+        sequence = []
+
+        for i in range(self.__maxsize):
+            sequence.append(data_type())
+
+        self.__stack = Array(starting_sequence=sequence,data_type=data_type)
 
     def push(self, item: T) -> None:
         ''' Pushes an item onto the stack.
@@ -45,7 +55,11 @@ class ArrayStack(IStack[T]):
             Arguments:
                 item: T -- The item to push onto the stack.
         '''
-        raise NotImplementedError
+        if self.full:
+            raise IndexError("Full")
+        
+        self.__stack[self.__count] = item
+        self.__count +=1
 
     def pop(self) -> T:
         ''' Pops an item from the stack.
@@ -71,7 +85,13 @@ class ArrayStack(IStack[T]):
             Returns:
                 T -- The item popped from the stack.
         '''
-        raise NotImplementedError
+        if self.empty:
+            raise IndexError("Empty")
+        popped = self.__stack.remove(self.__count)
+        self.__stack.remove(self.__count)
+        self.__count -=1
+        return popped
+
 
     def clear(self) -> None:
        ''' Clears the stack. 
@@ -87,7 +107,7 @@ class ArrayStack(IStack[T]):
                >>> print(repr(s))
                ArrayStack(5): items: []
         '''
-       raise NotImplementedError
+       self.__stack.clear()
     
     @property
     def peek(self) -> T:
@@ -118,7 +138,10 @@ class ArrayStack(IStack[T]):
                 >>> s.peek
                 IndexError('Stack is empty')
         '''
-        raise NotImplementedError
+        if self.empty:
+            raise IndexError('Stack is empty')
+        top = self.__count
+        return self.__stack[self.__count]
 
     @property
     def maxsize(self) -> int:
@@ -132,7 +155,8 @@ class ArrayStack(IStack[T]):
             Returns:
                 int: The maximum size of the stack.
         '''
-        raise NotImplementedError    
+        return self.__maxsize
+      
     @property
     def full(self) -> bool:
         ''' Returns True if the stack is full, False otherwise. 
@@ -143,7 +167,7 @@ class ArrayStack(IStack[T]):
             Returns:
                 bool: True if the stack is full, False otherwise.
         '''
-        raise NotImplementedError
+        return True if self.__count == self.__maxsize-1 else False
 
     @property
     def empty(self) -> bool:
@@ -164,7 +188,7 @@ class ArrayStack(IStack[T]):
             Returns:
                 bool: True if the stack is empty, False otherwise.
         '''
-        raise NotImplementedError
+        return True if self.__count == 0 else False
     
     def __eq__(self, other: object) -> bool:
         ''' Compares two stacks for equality.
@@ -218,7 +242,7 @@ class ArrayStack(IStack[T]):
             Returns:
                 int -- The number of items in the stack.
         '''
-        raise NotImplementedError
+        return self.__count
     
     def __contains__(self, item: T) -> bool:
         ''' Returns True if the item is in the stack, False otherwise.
@@ -261,7 +285,7 @@ class ArrayStack(IStack[T]):
             Returns:
                 str -- A string representation of the stack.
         '''
-        return str([self.stack[i] for i in range(self._top)])
+        return str([self.__stack[i] for i in range(self.__count)])
     
     def __repr__(self) -> str:
         ''' Returns a string representation of the stack.
@@ -277,7 +301,7 @@ class ArrayStack(IStack[T]):
             Returns:
                 str -- A string representation of the stack.
         '''
-        return f"ArrayStack({self.maxsize}): items: {str(self)}"
+        return f"ArrayStack({self.__maxsize}): items: {str(self)}"
     
 if __name__ == '__main__':
     filename = os.path.basename(__file__)
