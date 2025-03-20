@@ -212,8 +212,7 @@ class ArrayStack(IStack[T]):
             Returns:
                 bool -- True if the stacks are equal, False otherwise.
         '''
-        for i in range(self.max_size):
-            if(self.stack[i] != other[i]):
+        if(self.stack != other):
                 return False 
         return True
 

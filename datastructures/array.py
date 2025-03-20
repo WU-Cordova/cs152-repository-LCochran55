@@ -153,11 +153,11 @@ class Array(IArray[T]):
     def __eq__(self, other: object) -> bool:
         # for loop thru logical size
         #if not Other[index] == Self[index] etc
-        index = 0
-        for index in range(self.__logical_size):
-            if self.__elements[index] != other[index]:
-                return False
-        return True
+        if (isinstance(other,Array)):
+            for index in range(self.__logical_size):
+                if not(self.__elements[index] == other[index]):
+                    return False
+            return True
         # raise NotImplementedError('Equality not implemented.')
     
     def __iter__(self) -> Iterator[T]:
