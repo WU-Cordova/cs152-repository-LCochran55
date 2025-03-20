@@ -212,6 +212,8 @@ class ArrayStack(IStack[T]):
             Returns:
                 bool -- True if the stacks are equal, False otherwise.
         '''
+        print(f"S: {self.stack}")
+        print(f"O: {other}")
         if(self.stack != other):
                 return False 
         return True
