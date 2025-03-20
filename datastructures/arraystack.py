@@ -214,9 +214,8 @@ class ArrayStack(IStack[T]):
         '''
         print(f"S: {self.stack}")
         print(f"O: {other}")
-        if(self.stack != other):
-                return False 
-        return True
+        
+        return True if self.stack == other else False
 
 
     def __len__(self) -> int:
