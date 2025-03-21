@@ -211,10 +211,7 @@ class ArrayStack(IStack[T]):
                 
             Returns:
                 bool -- True if the stacks are equal, False otherwise.
-        '''
-        print(f"S: {self.stack}")
-        print(f"O: {other}")
-        
+        '''  
         return True if self.stack == other else False
 
 
@@ -308,4 +305,3 @@ class ArrayStack(IStack[T]):
 if __name__ == '__main__':
     filename = os.path.basename(__file__)
     print(f'OOPS!\nThis is the {filename} file.\nDid you mean to run your tests or program.py file?\nFor tests, run them from the Test Explorer on the left.')
-

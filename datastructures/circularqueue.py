@@ -72,7 +72,7 @@ class CircularQueue(IQueue[T]):
         '''
         if self.full:
             raise IndexError("OVERFLOW")
-        next_position = (self.__front + self.__count)%self.__maxsize
+        next_position = (self.__front + self.__count)% self.__maxsize
         self.__count +=1
         self.__queue[next_position] = item
 
@@ -104,7 +104,7 @@ class CircularQueue(IQueue[T]):
         if self.empty:
             raise IndexError("UNDERFLOW")
         item_to_return = self.__queue[self.__front]
-        self.__front = (self.__front + 1)% self.__maxsize
+        self.__front = (self.__front + 1) % self.__maxsize
         self.__count-=1
         self.__queue.pop()
         
@@ -126,7 +126,8 @@ class CircularQueue(IQueue[T]):
                 >>> q.rear
                 IndexError('Queue is empty')
         '''
-        raise NotImplementedError
+        self.__queue.clear()
+        self.count = 0
 
     @property
     def front(self) -> T:
@@ -304,11 +305,14 @@ class CircularQueue(IQueue[T]):
             Returns:
                 True if this CircularQueue is equal to another object, False otherwise
         '''
-        # if (self.__maxsize == other.maxsize()) and (self.front() == other.front()) and (self.pop() == other.pop) and (self.__data_type == type(other[0])):
-        #     frontOther = other.front()
+        if ((self.__maxsize is not other.maxsize) and (self.front is not other.front) and (self.dequeue is not other.dequeue) and (self.__data_type is not type(other[0]))):
+            return False
+        else:
+            for i in range(self.maxsize):
+                if(self.dequeue() is not other.dequeue()):
+                    return False
+                return True
 
-        #     for i in range(self.front, self.maxsize):
-        # Return False
 
     
     def __len__(self) -> int:

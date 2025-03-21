@@ -75,13 +75,12 @@ class Array(IArray[T]):
         listElements.append(data)
         self.__elements = np.array(listElements)
         self.__logical_size += 1
-        self.__grow()
+        self.grow()
 
         # raise NotImplementedError('Append not implemented.')
     
-    def __grow(self) -> None:
-
-        if(self.__logical_size == self.__physical_size):
+    def grow(self) -> None:
+        if(self.__logical_size is self.__physical_size):
             self.__physical_size *= 2
             self.__newElements= np.empty(self.__physical_size,dtype=self.__data_type)
             for index in range(self.__logical_size):
@@ -110,7 +109,7 @@ class Array(IArray[T]):
         listElements.insert(0,data)
         self.__elements = np.array(listElements)
         self.__logical_size += 1
-        self.__grow()
+        self.grow()
 
         #append item tofront of list
         #Groaw as needed
@@ -155,9 +154,9 @@ class Array(IArray[T]):
         #if not Other[index] == Self[index] etc
         if isinstance(other, Array) and len(self) == len(other):
             for i in range(len(self)):
-                if self[i] != other[i]: return False
-        return True
-    
+                if self[i] != other[i]: 
+                    return False
+            return True
         # raise NotImplementedError('Equality not implemented.')
     
     def __iter__(self) -> Iterator[T]:
