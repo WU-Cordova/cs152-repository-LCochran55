@@ -1,10 +1,14 @@
+from datastructures.array2d import Array2D
+from projects.project2.grid import Grid
+from projects.project2.gameController import GameController
 
 
 def main():
-    
-    print("Hello, World!")
-
-
+    file = "projects\\project2\\Testgrid.txt" 
+    grid = Grid(file) #TO TEST FILE
+    # grid = Grid(None,5,5)
+    game_controller = GameController(grid)
+    game_controller.run()
 
 if __name__ == '__main__':
     main()
