@@ -86,8 +86,6 @@ class Array(IArray[T]):
             for index in range(self.__logical_size):
                 self.__newElements[index] = copy.deepcopy(self.__elements)
             self.__elements = self.__newElements
-        else:
-            exit
         #for append methods
 
         #If array doesnt need to grow, exit

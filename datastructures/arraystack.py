@@ -212,7 +212,7 @@ class ArrayStack(IStack[T]):
             Returns:
                 bool -- True if the stacks are equal, False otherwise.
         '''  
-        return True if self.stack == other else False
+        return isinstance(other,ArrayStack) and self.stack == other.stack
 
 
     def __len__(self) -> int:

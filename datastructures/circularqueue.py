@@ -72,7 +72,7 @@ class CircularQueue(IQueue[T]):
         '''
         if self.full:
             raise IndexError("OVERFLOW")
-        next_position = (self.__front + self.__count)% self.__maxsize
+        next_position = (self.__front + self.__count)%self.__maxsize
         self.__count +=1
         self.__queue[next_position] = item
 
@@ -106,7 +106,6 @@ class CircularQueue(IQueue[T]):
         item_to_return = self.__queue[self.__front]
         self.__front = (self.__front + 1) % self.__maxsize
         self.__count-=1
-        self.__queue.pop()
         
         return item_to_return
 
