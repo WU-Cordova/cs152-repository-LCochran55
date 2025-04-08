@@ -52,7 +52,7 @@ class LinkedList[T](ILinkedList[T]):
     def prepend(self, item: T) -> None:
         #Check if item is data type
         if not(isinstance(item,self.data_type)):
-            raise TypeError
+            raise TypeError("Item is not of type {self.data_type}")
         #Instatiate a new node
         new_node: LinkedList.Node = LinkedList.Node(data = item)
 
@@ -73,7 +73,7 @@ class LinkedList[T](ILinkedList[T]):
         if self.head and self.head.data == target:
             self.prepend(item)
             return
-        
+
         travel = self.head
 
         new_node: LinkedList.Node = LinkedList.Node(data = item)
@@ -96,8 +96,7 @@ class LinkedList[T](ILinkedList[T]):
         if self.tail and self.tail.data == target:
             self.prepend(item)
             return
-        
-
+    
         travel = self.tail
 
         new_node: LinkedList.Node = LinkedList.Node(data = item)
@@ -137,7 +136,9 @@ class LinkedList[T](ILinkedList[T]):
         self.count-=1
 
     def remove_all(self, item: T) -> None:
-        return
+        while self.__contains__(item) is True:
+            self.remove(item)
+        
 
     def pop(self) -> T:
         if(self.empty):
@@ -196,7 +197,6 @@ class LinkedList[T](ILinkedList[T]):
                 return True
             travel = travel.next
         return False
-
 
     def __iter__(self) -> ILinkedList[T]:
         self.travel_node = self.head
