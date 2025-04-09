@@ -124,7 +124,7 @@ class LinkedList[T](ILinkedList[T]):
         if not(isinstance(item,self.data_type)):
             raise TypeError("Item is not of type {self.data_type}")
         
-        if item in self is False:
+        if item not in self:
             raise ValueError(f"The target item, {item}, is not in the linked list")
 
         if self.head == item:
