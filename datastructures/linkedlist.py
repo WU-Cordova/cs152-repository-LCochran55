@@ -120,7 +120,6 @@ class LinkedList[T](ILinkedList[T]):
         self.count+=1
 
     def remove(self, item: T) -> None:
-
         if not(isinstance(item,self.data_type)):
             raise TypeError("Item is not of type {self.data_type}")
         
@@ -129,6 +128,8 @@ class LinkedList[T](ILinkedList[T]):
 
         if self.head == item:
             self.head = self.head.next
+        elif self.tail == item:
+            self.pop
         else:
             travel = self.head.next
             travel_prev = self.head
@@ -136,9 +137,9 @@ class LinkedList[T](ILinkedList[T]):
             while travel.next is not None:
                 if travel.data == item:
                     travel_prev.next = travel.next
-                    break
+                    travel.next.previous = travel.previous
                 travel = travel.next
-                travel_prev = travel.previous
+                travel_prev = travel_prev.next
 
             if travel is None:
                 raise ValueError(f"The target item, {item}, is not in the linked list")
@@ -148,10 +149,9 @@ class LinkedList[T](ILinkedList[T]):
     def remove_all(self, item: T) -> None:
         if not(isinstance(item,self.data_type)):
             raise TypeError("Item is not of type {self.data_type}")
-        
-        return
-        # while item in self:
-        #     self.remove(item)
+
+        while item in self:
+            self.remove(item)
 
     def pop(self) -> T:    
         if(self.empty):
