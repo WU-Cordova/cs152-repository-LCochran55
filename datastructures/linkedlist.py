@@ -82,6 +82,7 @@ class LinkedList[T](ILinkedList[T]):
             if travel.data == target:
                 new_node.next = travel
                 new_node.previous = travel.previous
+                travel.previous.next = new_node
                 travel.previous = new_node
                 return
             travel = travel.next
@@ -115,7 +116,7 @@ class LinkedList[T](ILinkedList[T]):
         self.count+=1
 
     def remove(self, item: T) -> None:
-        if self.__contains__(item) is not True:
+        if self.__contains__(item) is False:
             raise ValueError(f"The target item, {item}, is not in the linked list")
 
         if self.head == item:
@@ -133,12 +134,13 @@ class LinkedList[T](ILinkedList[T]):
 
             if travel is None:
                 raise ValueError(f"The target item, {item}, is not in the linked list")
+
         self.count-=1
 
     def remove_all(self, item: T) -> None:
-        while self.__contains__(item) is True:
-            self.remove(item)
-        
+        return
+        # while item in self:
+        #     self.remove(item)
 
     def pop(self) -> T:
         if(self.empty):
@@ -215,7 +217,17 @@ class LinkedList[T](ILinkedList[T]):
 
     
     def __eq__(self, other: object) -> bool:
-        raise NotImplementedError("LinkedList.__eq__ is not implemented")
+        if isinstance(other,LinkedList) and self.count == other.count: 
+            travel = self.head
+            otherTravel = other.head
+            while travel and otherTravel is not None:
+                if travel.data != otherTravel.data:
+                    return False
+                travel = travel.next
+                otherTravel = otherTravel.next
+            return True
+        return False
+
 
     def __str__(self) -> str:
         items = []
