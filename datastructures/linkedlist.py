@@ -69,11 +69,13 @@ class LinkedList[T](ILinkedList[T]):
         self.count += 1
 
     def insert_before(self, target: T, item: T) -> None:
+        if not(isinstance(item,self.data_type)) or not(isinstance(target,self.data_type)):
+            raise TypeError("Item is not of type {self.data_type}")
 
         if self.head and self.head.data == target:
             self.prepend(item)
             return
-
+        
         travel = self.head
 
         new_node: LinkedList.Node = LinkedList.Node(data = item)
@@ -93,6 +95,8 @@ class LinkedList[T](ILinkedList[T]):
         self.count+=1
 
     def insert_after(self, target: T, item: T) -> None:
+        if not(isinstance(item,self.data_type)) or not(isinstance(target,self.data_type)):
+            raise TypeError("Item is not of type {self.data_type}")
 
         if self.tail and self.tail.data == target:
             self.prepend(item)
@@ -116,7 +120,11 @@ class LinkedList[T](ILinkedList[T]):
         self.count+=1
 
     def remove(self, item: T) -> None:
-        if self.__contains__(item) is False:
+
+        if not(isinstance(item,self.data_type)):
+            raise TypeError("Item is not of type {self.data_type}")
+        
+        if item in self is False:
             raise ValueError(f"The target item, {item}, is not in the linked list")
 
         if self.head == item:
@@ -138,11 +146,14 @@ class LinkedList[T](ILinkedList[T]):
         self.count-=1
 
     def remove_all(self, item: T) -> None:
+        if not(isinstance(item,self.data_type)):
+            raise TypeError("Item is not of type {self.data_type}")
+        
         return
         # while item in self:
         #     self.remove(item)
 
-    def pop(self) -> T:
+    def pop(self) -> T:    
         if(self.empty):
             raise IndexError
         data = self.tail.data
@@ -154,7 +165,7 @@ class LinkedList[T](ILinkedList[T]):
         self.count -= 1
         return data
 
-    def pop_front(self) -> T:
+    def pop_front(self) -> T: 
         if(self.empty):
             raise IndexError
         data = self.head.data
