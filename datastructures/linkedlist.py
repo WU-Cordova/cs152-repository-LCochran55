@@ -224,9 +224,13 @@ class LinkedList[T](ILinkedList[T]):
         return data
     
     def __reversed__(self) -> ILinkedList[T]:
-        return
+        linked_list: LinkedList[T] = LinkedList(data_type=self.data_type)
+        travel = self.tail
+        while travel is not None:
+            linked_list.append(travel.data)
+            travel = travel.previous
+        return linked_list
 
-    
     def __eq__(self, other: object) -> bool:
         if isinstance(other,LinkedList) and self.count == other.count: 
             travel = self.head
