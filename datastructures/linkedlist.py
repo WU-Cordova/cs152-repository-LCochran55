@@ -125,24 +125,23 @@ class LinkedList[T](ILinkedList[T]):
         
         if item not in self:
             raise ValueError(f"The target item, {item}, is not in the linked list")
-
+        
+        travel = self.head 
+    
         if self.head == item:
             self.head = self.head.next
-        elif self.tail == item:
-            self.pop
-        else:
-            travel = self.head.next
-            travel_prev = self.head
-
-            while travel.next is not None:
-                if travel.data == item:
-                    travel_prev.next = travel.next
-                    travel.next.previous = travel.previous
-                travel = travel.next
-                travel_prev = travel_prev.next
-
-            if travel is None:
+            self.head = None
+            return
+        while(travel is not None): 
+            if travel.data == item: 
+                break
+            prev = travel
+            travel = travel.next
+        if travel is None:
                 raise ValueError(f"The target item, {item}, is not in the linked list")
+ 
+        prev.next = travel.next
+        travel = None
 
         self.count-=1
 
