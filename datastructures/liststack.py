@@ -18,7 +18,8 @@ class ListStack[T](Generic[T], IStack[T]):
             data_type (type): The type of data the stack will hold.
 
         """
-        raise NotImplementedError("ListStack.__init__ is not implemented.")
+        self.data_type = data_type
+        self._list = LinkedList(data_type=data_type)
 
     def push(self, item: T):
         """
@@ -31,8 +32,10 @@ class ListStack[T](Generic[T], IStack[T]):
             TypeError: If the item is not of the correct type.
 
         """
-        raise NotImplementedError("ListStack.push is not implemented.")
-
+        if not(isinstance(item,self.data_type)):
+            raise TypeError (f"Item, {item}, is not of type, {self.data_type}.")
+        self._list.append(item)
+        
     def pop(self) -> T:
         """
         Removes and returns the top item from the stack.
