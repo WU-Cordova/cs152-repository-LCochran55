@@ -4,8 +4,7 @@ from projects.project2.gameController import GameController
 
 
 def main():
-    file = "projects\\project2\\Testgrid.txt" 
-    grid = Grid(file) #TO TEST FILE
+    grid = Grid(None,10,10) #TO TEST FILE
     # grid = Grid(None,5,5)
     game_controller = GameController(grid)
     game_controller.run()

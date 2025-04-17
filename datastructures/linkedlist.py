@@ -158,7 +158,7 @@ class LinkedList[T](ILinkedList[T]):
         data = self.tail.data
         if(self.head is not self.tail):
             self.tail = self.tail.previous
-            self.tail.next = None
+            # self.tail.next = None
         else:
             self.tail = self.head = None
         self.count -= 1
@@ -170,7 +170,7 @@ class LinkedList[T](ILinkedList[T]):
         data = self.head.data
         if(self.head is not self.tail):
             self.head = self.head.next
-            self.head.previous = None
+            # self.head.previous = None
         else:
             self.tail = self.head = None
         self.count -= 1
@@ -239,7 +239,6 @@ class LinkedList[T](ILinkedList[T]):
                 otherTravel = otherTravel.next
             return True
         return False
-
 
     def __str__(self) -> str:
         items = []
