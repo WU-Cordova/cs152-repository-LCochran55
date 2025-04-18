@@ -178,14 +178,14 @@ class LinkedList[T](ILinkedList[T]):
 
     @property
     def front(self) -> T:
-        if self.count:
+        if not(self.empty):
             return self.head.data
         else:
             raise IndexError('The Linked List is empty')
 
     @property
     def back(self) -> T:
-        if self.count:
+        if not(self.empty):
             return self.tail.data
         else:
             raise IndexError('The Linked List is empty')

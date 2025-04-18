@@ -119,7 +119,7 @@ class ListStack(Generic[T], IStack[T]):
         Returns:
             str: A string representation of the stack.
         """
-        return
+        return str(self._list)
 
     def __repr__(self) -> str:
         """
@@ -129,7 +129,7 @@ class ListStack(Generic[T], IStack[T]):
             str: A detailed string representation of the stack.
 
         """
-        return
+        return f'liststack {self}, top: {self.peek()}'
 
 if __name__ == '__main__':
     filename = os.path.basename(__file__)

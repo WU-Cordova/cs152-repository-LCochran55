@@ -151,7 +151,7 @@ class Deque(IQueue[T]):
         Returns:
             - str: A string representation of the deque.
         """
-        raise NotImplementedError("Method to get the string representation of the deque is not implemented.")
+        return str(self._list) 
     
     def __repr__(self) -> str:
         """
@@ -159,8 +159,8 @@ class Deque(IQueue[T]):
 
         Returns:
             - str: A detailed string representation of the deque.
-        """
-        raise NotImplementedError("Method to get the detailed string representation of the deque is not implemented.")
+        """""
+        return f'Dequeue {self._list}, top: {self.front()}'
 
 
 if __name__ == '__main__':
