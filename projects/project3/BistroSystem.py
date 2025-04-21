@@ -11,7 +11,7 @@ class BistroSystem:
             'Latte' : 1.20,
             'Mocha' : 1.25,
             'Tea': 1.00,
-            'Matcha Latte': 2.00, 
+            'Matcha': 2.00, 
             'Lemonade' : 1.00
         }
 
@@ -61,9 +61,10 @@ class BistroSystem:
     def displayMenu(self):
         #Displays the menu
         #================== TEMP ===============================
-        print(self.menu)
-        print(self.add_ons)
-
+        with open("menu.txt", 'r') as file:
+                menu = file.read()
+                print(menu)
+        
     def takeOrder(self) -> CustomerOrder:
         #Takes the users order, adding as many drinks as they select
 

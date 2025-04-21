@@ -23,16 +23,18 @@ class HashMap(IHashMap[KT, VT]):
         return bucket_index % len(bucket_size)
 
     def __getitem__(self, key: KT) -> VT:
-
         bucket_chain: LinkedList = self._buckets[self.get_bucket_index(key,len(self._buckets))]
-        
+
         for (k,v) in bucket_chain:
             if k == key:
-                return k #FOUND
+                return v #FOUND
         raise IndexError
 
     def __setitem__(self, key: KT, value: VT) -> None:        
         raise NotImplementedError("HashMap.__setitem__() is not implemented yet.")
+    
+    def _resize(self):
+        pass
 
     def keys(self) -> Iterator[KT]:
         raise
