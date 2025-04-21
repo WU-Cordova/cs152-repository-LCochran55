@@ -1,9 +1,9 @@
-
+from projects.project3.drink import Drink
+from projects.project3.BistroSystem import BistroSystem
 
 def main():
-    
-    print("Hello, World!")
-
+    bistroSys = BistroSystem()
+    bistroSys.MainMenu()
 
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ from typing import Optional
 
 @dataclass
 class Drink:
-    name: Optional[str] = None
-    size: Optional[str] = None
-    add_on: Optional[Bag] = None
-    price: Optional[float] = None
+    type: str
+    size: str
+    add_on: list[str]
+    price: float

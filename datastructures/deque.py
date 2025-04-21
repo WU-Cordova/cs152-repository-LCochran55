@@ -122,8 +122,8 @@ class Deque(IQueue[T]):
         Returns:
             - bool: True if the item exists in the deque, False otherwise.
         """
-        if not(isinstance(item,self.data_type)):
-            raise TypeError (f"Item, {item}, is not of type, {self.data_type}.")
+        # if not(isinstance(item,self.data_type)):
+        #     raise TypeError (f"Item, {item}, is not of type, {self.data_type}.")
         return True if item in self._list else False
     
     def __eq__(self, other) -> bool:
@@ -160,7 +160,7 @@ class Deque(IQueue[T]):
         Returns:
             - str: A detailed string representation of the deque.
         """""
-        return f'Dequeue {self._list}, top: {self.front()}'
+        return f'liststacDequeuk {self}, top: {self.front}'
 
 
 if __name__ == '__main__':

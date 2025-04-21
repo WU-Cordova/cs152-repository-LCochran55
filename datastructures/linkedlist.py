@@ -62,8 +62,8 @@ class LinkedList[T](ILinkedList[T]):
         #if not empty
         else:
             if self.head:
-                self.head.next = new_node
-            new_node.previous = self.head
+                self.head.previous = new_node
+            new_node.next = self.head
         
         self.head = new_node
         self.count += 1
