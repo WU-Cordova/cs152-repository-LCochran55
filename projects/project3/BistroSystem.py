@@ -58,9 +58,11 @@ class BistroSystem:
         else:
             self.exit()
     
-    def displayMenu():
+    def displayMenu(self):
         #Displays the menu
-        pass
+        #================== TEMP ===============================
+        print(self.menu)
+        print(self.add_ons)
 
     def takeOrder(self) -> CustomerOrder:
         #Takes the users order, adding as many drinks as they select
@@ -133,17 +135,17 @@ class BistroSystem:
 
         self.currentOrders.append(customerOrder)
 
+    def viewOrders(self):
+        print(self.currentOrders)
 
-    def viewOrders():
+    def completeOrder(self):
+        self.history.append(self.currentOrders.pop_front())
+
+    def viewDayReport(self):
         pass
 
-    def completeOrder():
+    def exit(self):
         pass
-
-    def viewDayReport():
-        pass
-
-    def exit():
 
     
 

@@ -23,7 +23,13 @@ class HashMap(IHashMap[KT, VT]):
         return bucket_index % len(bucket_size)
 
     def __getitem__(self, key: KT) -> VT:
-        raise NotImplementedError("HashMap.__getitem__() is not implemented yet.")
+
+        bucket_chain: LinkedList = self._buckets[self.get_bucket_index(key,len(self._buckets))]
+        
+        for (k,v) in bucket_chain:
+            if k == key:
+                return k #FOUND
+        raise IndexError
 
     def __setitem__(self, key: KT, value: VT) -> None:        
         raise NotImplementedError("HashMap.__setitem__() is not implemented yet.")
@@ -41,10 +47,17 @@ class HashMap(IHashMap[KT, VT]):
         raise NotImplementedError("HashMap.__delitem__() is not implemented yet.")
     
     def __contains__(self, key: KT) -> bool:
-        for item in self._buckets:
-            if item == key:
-                return True
-        return False
+        #1. Get bucket index based on key
+        bucket_index = self.get_bucket_index(key,len(self._buckets))
+
+        #2 Get bucket chain
+        bucket_chain: LinkedList = self._buckets[bucket_index]
+
+        #3 Search if that key exist
+        for (k,v) in bucket_chain:
+            if k == key:
+                return True #FOUND
+        return False #NOT FOUND
     
     def __len__(self) -> int:
         return self._count
@@ -82,3 +95,4 @@ class HashMap(IHashMap[KT, VT]):
         except Exception:
             key_bytes = repr(key).encode()
         return int(hashlib.md5(key_bytes).hexdigest(), 16)
+    
