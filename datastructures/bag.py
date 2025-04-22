@@ -63,3 +63,6 @@ class Bag(IBag[T]): #Bag implements IBAG interface
     def clear(self) -> None:
         self.__bag.clear()
         # raise NotImplementedError("clear method not implemented")
+
+    def __str__(self) -> str:
+        return "{%s}"%', '.join("%r: %s"%p for p in self.items())

@@ -4,6 +4,8 @@ from projects.project3.CustomerOrder import CustomerOrder
 from datastructures.bag import Bag
 from datastructures.linkedlist import LinkedList
 
+import datetime
+
 class BistroSystem:
     def __init__(self) -> None:
 
@@ -20,6 +22,18 @@ class BistroSystem:
             'Syrup': .25,
             'Milk Alternative': .50
         }
+
+        #Saves the date to input into the history file for saving end of day report
+        current_time = datetime.datetime.now()
+        year = current_time.year
+        month = current_time.month
+        day = current_time.day
+
+        self.historyFile = "projects\\project3\\OrderHistory.txt"
+
+        with open(self.historyFile,'a') as openfile:
+                openfile.write(f"{month}/{day}/{year}\n=============================")
+        openfile.close()
 
         #Stores the total amount of each drink made during a full day
         self.total_orders = Bag()
@@ -61,9 +75,11 @@ class BistroSystem:
     def displayMenu(self):
         #Displays the menu
         #================== TEMP ===============================
-        with open("menu.txt", 'r') as file:
-                menu = file.read()
-                print(menu)
+        with open("projects\\project3\\menu.txt", 'r') as file:
+                menuFile = file.read()
+                print(menuFile)
+        file.close()
+        return
         
     def takeOrder(self) -> CustomerOrder:
         #Takes the users order, adding as many drinks as they select
@@ -121,7 +137,8 @@ class BistroSystem:
             drink_list.append(drink)
 
             self.total_sales += price
-            self.total_orders += drinkChoice
+            self.total_orders.add(drinkChoice)
+            print(self.total_orders)
 
             price = 0.00
 
@@ -137,13 +154,17 @@ class BistroSystem:
         self.currentOrders.append(customerOrder)
 
     def viewOrders(self):
-        print(self.currentOrders)
+        pass
 
     def completeOrder(self):
         self.history.append(self.currentOrders.pop_front())
 
     def viewDayReport(self):
-        pass
+        with open(self.historyFile,'a') as openfile:
+                openfile.write(f"{str(self.total_orders)}")
+        openfile.close()
+
+
 
     def exit(self):
         pass
