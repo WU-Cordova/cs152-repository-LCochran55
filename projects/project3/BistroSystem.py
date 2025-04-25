@@ -162,24 +162,26 @@ class BistroSystem:
         month = current_time.month
         day = current_time.day
 
+        current_day = f"{month}/{day}/{year}"
+
         historyFile = "projects\\project3\\OrderHistory.txt"
 
         with open(historyFile,'r+') as file:
             file.seek(0)
-            date = file.readline().strip()
-            if date != f"{month}/{day}/{year}":
-                print("NOT EQ")
+            date = file.readline().rstrip()
+            if date != current_day:
                 lines = file.readlines() # read old content
                 file.seek(0) # go back to the beginning of the file
-                file.write(f"{month}/{day}/{year}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
+                file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
                 file.write(date)
                 file.write("\n")
                 for line in lines: # write old content after new
                     file.write(line)
                 file.close
             else:
-                file.truncate(0)
-                file.write(f"{month}/{day}/{year}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
+                file.seek(0)
+                file.truncate()
+                file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
                 file.close
         
         with open(historyFile,'r') as openfile:
