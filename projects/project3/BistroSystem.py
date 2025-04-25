@@ -10,33 +10,22 @@ class BistroSystem:
     def __init__(self) -> None:
 
         self.menu = {
-            'Latte' : 1.20,
-            'Mocha' : 1.25,
-            'Tea': 1.00,
-            'Matcha': 2.00, 
-            'Lemonade' : 1.00
+            'Latte'.casefold()  : 1.20,
+            'Mocha'.casefold()  : 1.25,
+            'Tea'.casefold() : 1.00,
+            'Matcha'.casefold() : 2.00, 
+            'Lemonade'.casefold()  : 1.00
         }
 
         self.add_ons = {
-            'Espresso shot' : .50,
-            'Syrup': .25,
-            'Milk Alternative': .50
+            'Espresso shot'.casefold()  : 0.50,
+            'Syrup'.casefold() : 0.25,
+            'Milk Alternative'.casefold() : 0.50
         }
-
-        #Saves the date to input into the history file for saving end of day report
-        current_time = datetime.datetime.now()
-        year = current_time.year
-        month = current_time.month
-        day = current_time.day
-
-        self.historyFile = "projects\\project3\\OrderHistory.txt"
-
-        with open(self.historyFile,'a') as openfile:
-                openfile.write(f"{month}/{day}/{year}\n=============================")
-        openfile.close()
 
         #Stores the total amount of each drink made during a full day
         self.total_orders = Bag()
+        self.total_add_ons = Bag()
 
         #Stores the total amount of sales made during a day
         self.total_sales = 0.00
@@ -52,27 +41,35 @@ class BistroSystem:
 
         options = [1,2,3,4,5,6]
 
-        print(f"Welcome to bearcat Bistro!")
-        userChoice = int(input(f"1. Display Menu\n2. Take new order\n3. View Open Orders\n4. Mark Next Order as Complete\n5. View End of Day Report\n6. Log Out and Exit\n"))
+        print(f"\nWelcome to bearcat Bistro!")
+        userChoice = int(input(f"1. Display Menu\n2. Take new order\n3. View Open Orders\n4. Mark Next Order as Complete\n5. View End of Day Report\n6. Log Out and Exit\n\n"))
 
         while userChoice not in options:
             print(f"Please select a valid choice")
-            userChoice = int(input(f"1. Display Menu\n2. Take new order\n3. View Open Orders\n4. Mark Next Order as Complete\n5. View End of Day Report\n6. Log Out and Exit\n"))
+            userChoice = int(input(f"1. Display Menu\n2. Take new order\n3. View Open Orders\n4. Mark Next Order as Complete\n5. View End of Day Report\n6. Log Out and Exit\n\n"))
 
         if(userChoice == 1):
             self.displayMenu()
+            self.MainMenu()
         elif(userChoice==2):
             self.takeOrder()
+            self.MainMenu()
         elif(userChoice==3):
             self.viewOrders()
+            self.MainMenu()
         elif(userChoice==4):
             self.completeOrder()
+            self.MainMenu()
         elif(userChoice==5):
             self.viewDayReport()
+            self.MainMenu()
         else:
             self.exit()
-    
-    def displayMenu(self):
+
+    def logIn(self):
+        pass
+
+    def displayMenu(self) -> None:
         #Displays the menu
         #================== TEMP ===============================
         with open("projects\\project3\\menu.txt", 'r') as file:
@@ -80,8 +77,8 @@ class BistroSystem:
                 print(menuFile)
         file.close()
         return
-        
-    def takeOrder(self) -> CustomerOrder:
+
+    def takeOrder(self) -> None:
         #Takes the users order, adding as many drinks as they select
 
         drink_list = []
@@ -93,81 +90,113 @@ class BistroSystem:
         takingOrder = True
 
         while takingOrder == True:
-            drinkChoice = str(input(f"Drink Choice?: "))
+            drinkChoice = str(input(f"Drink Choice?: ")).casefold()
             while drinkChoice not in self.menu:
                 print(f"Item not on menu")
-                drinkChoice = str(input(f"Drink Choice?: "))
+                drinkChoice = str(input(f"Drink Choice?: ")).casefold()
             price += self.menu.get(drinkChoice)
                 
-            drinkSize = str(input(f"Size? [s,m,l]: "))
-            while drinkSize != "s" and drinkSize != "m" and drinkSize != "l":
+            drinkSize = str(input(f"Size? [s,m,l]: ")).casefold()
+            while drinkSize  != "s".casefold() and drinkSize != "m".casefold()  and drinkSize  != "l".casefold() :
                 print(f"Size not on menu")
-                drinkChoice = str(input(f"Size? [s,m,l]: "))
+                drinkSize = str(input(f"Size? [s,m,l]: ")).casefold()
             #Adds to price if user wants a bigger drink
-            if drinkSize == 'm':
+            if drinkSize == 'm'.casefold() :
                 price += .25
-            elif drinkSize == 'l':
+            elif drinkSize == 'l'.casefold() :
                 price += 50
             
             add_on_list = []
 
-            add = str(input(f"Any add-ons? [y or n]: "))
-            while add != "y" and add != "n":
-                add = str(input(f"Any add-ons? [y or n]: "))
+            add = str(input(f"Any add-ons? [y or n]: ")).casefold()
+            while add  != "y".casefold()  and add  != "n".casefold() :
+                add = str(input(f"Any add-ons? [y or n]: ")).casefold()
             
             #Will ask the user for any add-ons they want until they input n 
-            while add == "y":
-                added = str(input(f"What would you like to add?: "))
+            while add  == "y".casefold() :
+                added = str(input(f"What would you like to add?: ")).casefold()
                 while added not in self.add_ons:
                     print(f"Add on not on menu")
-                    added = str(input(f"What would you like to add?: "))
+                    added = str(input(f"What would you like to add?: ")).casefold()
                 
                 #Appends each add on they want, so it can be read back later
                 add_on_list.append(added)
+                self.total_add_ons.add(added)
 
-                price += self.add_ons.get(added)
+                price += self.add_ons.get(added.casefold())
 
                 #Continues to ask the user for any add-ons they want until they input n 
                 #Allows user to add more than 1 syrup, espresso, etc
-                add = str(input(f"Any more add-ons? [y or n]:"))
-                while add != "y" and add != "n":
-                    add = str(input(f"Any add-ons? [y or n]:"))
+                add = str(input(f"Any more add-ons? [y or n]: ")).casefold()
+                while add  != "y".casefold()  and add  != "n".casefold() :
+                    add = str(input(f"Any add-ons? [y or n]: ")).casefold()
 
             drink = Drink(type=drinkChoice,size=drinkSize,add_on=add_on_list,price=price)
             drink_list.append(drink)
 
             self.total_sales += price
             self.total_orders.add(drinkChoice)
-            print(self.total_orders)
 
             price = 0.00
 
             #Allows user to add multiple drinks to one order
-            additionalOrder = str(input("Add additional item? [y or n]: "))
-            while add != "y" and add != "n":
-                additionalOrder = str(input("Add additional item? [y or n]: "))
-            if additionalOrder == "n":
+            additionalOrder = str(input("Add additional item? [y or n]: ")).casefold()
+            while additionalOrder != "y".casefold() and additionalOrder != "n".casefold():
+                additionalOrder = str(input("Add additional item? [y or n]: ")).casefold()
+            if additionalOrder == "n".casefold():
                 takingOrder = False  
 
         customerOrder = CustomerOrder(name=customer,order=drink_list)
-
         self.currentOrders.append(customerOrder)
 
-    def viewOrders(self):
-        pass
+    def viewOrders(self) -> None:
+        print(f"CURRENT UNFULFILLED ORDERS\n===============\n{self.currentOrders}")
 
-    def completeOrder(self):
+    def completeOrder(self) -> None:
         self.history.append(self.currentOrders.pop_front())
 
-    def viewDayReport(self):
-        with open(self.historyFile,'a') as openfile:
-                openfile.write(f"{str(self.total_orders)}")
-        openfile.close()
+    def viewDayReport(self) -> None:
+
+        current_time = datetime.datetime.now()
+        year = current_time.year
+        month = current_time.month
+        day = current_time.day
+
+        historyFile = "projects\\project3\\OrderHistory.txt"
+
+        with open(historyFile,'r+') as file:
+            file.seek(0)
+            date = file.readline().strip()
+            if date != f"{month}/{day}/{year}":
+                print("NOT EQ")
+                lines = file.readlines() # read old content
+                file.seek(0) # go back to the beginning of the file
+                file.write(f"{month}/{day}/{year}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
+                file.write(date)
+                file.write("\n")
+                for line in lines: # write old content after new
+                    file.write(line)
+                file.close
+            else:
+                file.truncate(0)
+                file.write(f"{month}/{day}/{year}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
+                file.close
+        
+        with open(historyFile,'r') as openfile:
+            report = openfile.read()
+            print(report)
+
+    def exit(self) -> None:
+        exit = str(input("Log out? [y/n]:")).casefold()
+        while exit  != "y".casefold()  and exit != "n".casefold() :
+            exit = str(input("Log out? [y/n]:")).casefold()
+        if exit == "y".casefold():
+            print("Logging out...")
+            exit
+        else:
+            self.MainMenu()
 
 
-
-    def exit(self):
-        pass
 
     
 

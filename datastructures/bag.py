@@ -65,4 +65,4 @@ class Bag(IBag[T]): #Bag implements IBAG interface
         # raise NotImplementedError("clear method not implemented")
 
     def __str__(self) -> str:
-        return "{%s}"%', '.join("%r: %s"%p for p in self.items())
+        return f"%s" % str (self.__bag)

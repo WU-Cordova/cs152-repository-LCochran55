@@ -4,6 +4,7 @@ from datastructures.ihashmap import KT, VT, IHashMap
 from datastructures.array import Array
 import pickle
 import hashlib
+import math
 
 from datastructures.linkedlist import LinkedList
 
@@ -24,17 +25,49 @@ class HashMap(IHashMap[KT, VT]):
 
     def __getitem__(self, key: KT) -> VT:
         bucket_chain: LinkedList = self._buckets[self.get_bucket_index(key,len(self._buckets))]
-
         for (k,v) in bucket_chain:
             if k == key:
                 return v #FOUND
         raise IndexError
 
-    def __setitem__(self, key: KT, value: VT) -> None:        
-        raise NotImplementedError("HashMap.__setitem__() is not implemented yet.")
+    def __setitem__(self, key: KT, value: VT) -> None:
+        if self._count/len(self._buckets) >= (self._load_factor*0.75):
+            self._resize()
+
+        # raise NotImplementedError("HashMap.__setitem__() is not implemented yet.")
     
-    def _resize(self):
-        pass
+    def _resize(self) -> None:
+        #Calls next prime to deterine next size
+        tempBuckets = self._buckets
+        double_buckets = len(self._buckets)*2
+        internal_capacity = self._nextPrime(double_buckets)
+
+        
+        emptybucket = Array[LinkedList[Tuple[KT, VT]]] = \
+                Array(starting_sequence=[LinkedList(data_type=tuple) for _ in range(internal_capacity)],
+                      data_type=LinkedList)
+        for (k,v) in emptybucket:
+            (k,v) == tempBuckets(k,v)
+
+
+    def _nextPrime(self, n:int) -> int:
+        
+        def is_prime(num:int) -> bool:
+            if num <= 1:
+                is_prime = False
+            else:
+                is_prime = True
+                for i in range(2, int(math.sqrt(n)) + 1):
+                    if n % i == 0:
+                        is_prime = False
+                        break
+                return is_prime
+
+        while not is_prime(n):
+            n += 1
+
+        return n
+
 
     def keys(self) -> Iterator[KT]:
         raise
