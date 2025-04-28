@@ -33,8 +33,6 @@ class BistroSystem:
         #Keeps track of currents unmade orders
         self.currentOrders = LinkedList(CustomerOrder)
 
-        #Stores past orders once they are made
-        self.history = LinkedList(CustomerOrder)
 
     def MainMenu(self)-> None:
         #Opens up the options menu, and starts he bistro system
@@ -140,6 +138,7 @@ class BistroSystem:
             price = 0.00
 
             #Allows user to add multiple drinks to one order
+            print(f"Your current order is, {drink_list}")
             additionalOrder = str(input("Add additional item? [y or n]: ")).casefold()
             while additionalOrder != "y".casefold() and additionalOrder != "n".casefold():
                 additionalOrder = str(input("Add additional item? [y or n]: ")).casefold()
@@ -153,7 +152,16 @@ class BistroSystem:
         print(f"CURRENT UNFULFILLED ORDERS\n===============\n{self.currentOrders}")
 
     def completeOrder(self) -> None:
-        self.history.append(self.currentOrders.pop_front())
+        completed_order = str(input("What order to complete?: ")).casefold()
+        for order in self.currentOrders:
+            print(order)
+            print(order.name)
+            print(order.name.casefold())
+            
+            name = order.name
+            if completed_order == name.casefold():
+                self.currentOrders.remove(order)
+        print("Order not in list")
 
     def viewDayReport(self) -> None:
 

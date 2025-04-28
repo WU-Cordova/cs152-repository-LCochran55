@@ -21,34 +21,57 @@ class HashMap(IHashMap[KT, VT]):
     
     def get_bucket_index(self,key: KT, bucket_size: int) -> int:
         bucket_index = self._hash_function(key)
-        return bucket_index % len(bucket_size)
+        return bucket_index % len(self._buckets)
 
     def __getitem__(self, key: KT) -> VT:
-        bucket_chain: LinkedList = self._buckets[self.get_bucket_index(key,len(self._buckets))]
+
+        #1. Get bucket index based on key
+        bucket_index = self.get_bucket_index(key,len(self._buckets))
+
+        #2 Get bucket chain
+        bucket_chain: LinkedList = self._buckets[bucket_index]
+
+        #3 Search if that key exist
         for (k,v) in bucket_chain:
             if k == key:
                 return v #FOUND
-        raise IndexError
+        # raise IndexError
 
     def __setitem__(self, key: KT, value: VT) -> None:
+        keyHash = self._default_hash_function(key)
+
+        bucket_index = self.get_bucket_index(keyHash,len(self._buckets))
+
+        #2 Get bucket chain
+        bucket_chain: LinkedList = self._buckets[bucket_index]
+
+        for item in bucket_chain:
+            if item == (key,value):
+                item = (key,value)
+
+
+        self._buckets[self.get_bucket_index(keyHash,len(self._buckets))].append((key,value))
+        self._count+=1
+
         if self._count/len(self._buckets) >= (self._load_factor*0.75):
             self._resize()
-
-        # raise NotImplementedError("HashMap.__setitem__() is not implemented yet.")
     
+
     def _resize(self) -> None:
         #Calls next prime to deterine next size
         tempBuckets = self._buckets
         double_buckets = len(self._buckets)*2
         internal_capacity = self._nextPrime(double_buckets)
 
-        
-        emptybucket = Array[LinkedList[Tuple[KT, VT]]] = \
+        emptybucket: Array[LinkedList[Tuple[KT, VT]]] = \
                 Array(starting_sequence=[LinkedList(data_type=tuple) for _ in range(internal_capacity)],
                       data_type=LinkedList)
-        for (k,v) in emptybucket:
-            (k,v) == tempBuckets(k,v)
-
+        
+        self._count = 0
+        for bucket in tempBuckets:
+            for (k,v) in bucket:
+                emptybucket[self.get_bucket_index(k,len(self._buckets))] = (k,v)
+                self._count+=1
 
     def _nextPrime(self, n:int) -> int:
         
@@ -70,6 +93,7 @@ class HashMap(IHashMap[KT, VT]):
 
 
     def keys(self) -> Iterator[KT]:
+        pass
         raise
     
     def values(self) -> Iterator[VT]:
@@ -98,10 +122,12 @@ class HashMap(IHashMap[KT, VT]):
         return self._count
     
     def __iter__(self) -> Iterator[KT]:
-        raise NotImplementedError("HashMap.__iter__() is not implemented yet.")
+        bucket_chain: LinkedList = self._buckets[self.get_bucket_index(key,len(self._buckets))]
+        for (k,v) in bucket_chain:
+            yield k
     
     def __eq__(self, other: object) -> bool:
-        raise NotImplementedError("HashMap.__eq__() is not implemented yet.")
+        return False if self._buckets is not other else True
 
     def __str__(self) -> str:
         return "{" + ", ".join(f"{key}: {value}" for key, value in self) + "}"
