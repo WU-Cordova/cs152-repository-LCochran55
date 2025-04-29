@@ -102,7 +102,7 @@ class BistroSystem:
             if drinkSize == 'm'.casefold() :
                 price += .25
             elif drinkSize == 'l'.casefold() :
-                price += 50
+                price += 0.50
             
             add_on_list = []
 
@@ -178,6 +178,7 @@ class BistroSystem:
             file.seek(0)
             date = file.readline().rstrip()
             if date != current_day:
+                print("NOT SAME")
                 lines = file.readlines() # read old content
                 file.seek(0) # go back to the beginning of the file
                 file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
@@ -187,6 +188,7 @@ class BistroSystem:
                     file.write(line)
                 file.close
             else:
+                print("SAME")
                 file.seek(0)
                 file.truncate()
                 file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning

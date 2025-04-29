@@ -15,13 +15,13 @@ class HashMap(IHashMap[KT, VT]):
                 Array(starting_sequence=[LinkedList(data_type=tuple) for _ in range(number_of_buckets)],
                       data_type=LinkedList)
         self._count: int = 0
-        self._load_factor: float = 0
+        self._load_factor: float = load_factor
 
         self._hash_function = custom_hash_function or self._default_hash_function
     
     def get_bucket_index(self,key: KT, bucket_size: int) -> int:
         bucket_index = self._hash_function(key)
-        return bucket_index % len(self._buckets)
+        return bucket_index % bucket_size
 
     def __getitem__(self, key: KT) -> VT:
 
@@ -35,25 +35,26 @@ class HashMap(IHashMap[KT, VT]):
         for (k,v) in bucket_chain:
             if k == key:
                 return v #FOUND
-        # raise IndexError
+        raise KeyError
 
     def __setitem__(self, key: KT, value: VT) -> None:
-        keyHash = self._default_hash_function(key)
+        # keyHash = self._default_hash_function(key)
 
-        bucket_index = self.get_bucket_index(keyHash,len(self._buckets))
+        bucket_index = self.get_bucket_index(key,len(self._buckets))
 
         #2 Get bucket chain
         bucket_chain: LinkedList = self._buckets[bucket_index]
 
         for item in bucket_chain:
-            if item == (key,value):
-                item = (key,value)
+            if item[0] == key:
+                self._buckets[bucket_index].pop()
+                self._buckets[bucket_index].append((key,value))
+                return
 
-
-        self._buckets[self.get_bucket_index(keyHash,len(self._buckets))].append((key,value))
+        self._buckets[self.get_bucket_index(key,len(self._buckets))].append((key,value))
         self._count+=1
 
-        if self._count/len(self._buckets) >= (self._load_factor*0.75):
+        if self._count/len(self._buckets) >= (self._load_factor):
             self._resize()
     
 
@@ -70,8 +71,10 @@ class HashMap(IHashMap[KT, VT]):
         self._count = 0
         for bucket in tempBuckets:
             for (k,v) in bucket:
-                emptybucket[self.get_bucket_index(k,len(self._buckets))] = (k,v)
+                emptybucket[self.get_bucket_index(k,len(emptybucket))].append((k,v))
                 self._count+=1
+        
+        self._buckets = emptybucket
 
     def _nextPrime(self, n:int) -> int:
         
@@ -103,7 +106,13 @@ class HashMap(IHashMap[KT, VT]):
         raise NotImplementedError("HashMap.items() is not implemented yet.")
             
     def __delitem__(self, key: KT) -> None:
-        raise NotImplementedError("HashMap.__delitem__() is not implemented yet.")
+        bucket_index = self.get_bucket_index(key,len(self._buckets))
+        bucket_chain: LinkedList = self._buckets[bucket_index]
+        for (k,v) in bucket_chain:
+            if k == key:
+                self._buckets[bucket_index].pop()
+                return
+        raise KeyError
     
     def __contains__(self, key: KT) -> bool:
         #1. Get bucket index based on key
@@ -122,9 +131,9 @@ class HashMap(IHashMap[KT, VT]):
         return self._count
     
     def __iter__(self) -> Iterator[KT]:
-        bucket_chain: LinkedList = self._buckets[self.get_bucket_index(key,len(self._buckets))]
-        for (k,v) in bucket_chain:
-            yield k
+        for bucket in self._buckets:
+            for (k,v) in bucket:
+                yield k
     
     def __eq__(self, other: object) -> bool:
         return False if self._buckets is not other else True
