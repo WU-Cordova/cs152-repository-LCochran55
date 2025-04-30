@@ -130,7 +130,7 @@ class LinkedList[T](ILinkedList[T]):
     
         if self.head.data is item:
             self.head = self.head.next
-            self.head = None
+            # self.head = None
             return
         while(travel is not None): 
             if travel.data == item: 
@@ -142,7 +142,7 @@ class LinkedList[T](ILinkedList[T]):
                 raise ValueError(f"The target item, {item}, is not in the linked list")
  
         prev.next = travel.next
-        travel = None
+        # travel = None
         
         self.count-=1
 

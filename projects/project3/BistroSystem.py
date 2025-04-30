@@ -140,6 +140,8 @@ class BistroSystem:
 
             drink = Drink(type=drinkChoice,size=drinkSize,add_on=add_on_list,price=price)
             drink_list.append(drink)
+            print("FFFFF")
+            print(drink_list)
     
 
             self.total_sales += price
@@ -177,7 +179,6 @@ class BistroSystem:
         completed_order = str(input("Enter customer's name to complete: ")).casefold()
 
         for order in self.currentOrders:
-
             name = order.name
             if completed_order == name.casefold():
                 print(f"BBBBBBBB {self.currentOrders}")
