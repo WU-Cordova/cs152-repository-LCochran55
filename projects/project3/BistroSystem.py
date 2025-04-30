@@ -20,7 +20,7 @@ class BistroSystem:
         self.add_ons = {
             'Espresso shot'.casefold()  : 0.50,
             'Syrup'.casefold() : 0.25,
-            'Milk Alternative'.casefold() : 0.50
+            'Alt. Milk'.casefold() : 0.50
         }
 
         #Stores the total amount of each drink made during a full day
@@ -35,7 +35,10 @@ class BistroSystem:
 
 
     def MainMenu(self)-> None:
-        #Opens up the options menu, and starts he bistro system
+        """
+        Opens up the options menu, and starts the bistro system
+        Each option will return back to the menu after it is completed
+        """
 
         options = [1,2,3,4,5,6]
 
@@ -64,11 +67,12 @@ class BistroSystem:
         else:
             self.exit()
 
-    def logIn(self):
-        pass
+
 
     def displayMenu(self) -> None:
-        #Displays the menu
+        """
+        Prints a text file containing the menu
+        """
         #================== TEMP ===============================
         with open("projects\\project3\\menu.txt", 'r') as file:
                 menuFile = file.read()
@@ -77,7 +81,12 @@ class BistroSystem:
         return
 
     def takeOrder(self) -> None:
-        #Takes the users order, adding as many drinks as they select
+        """
+        Asks for users name, drink order, size, add ons, and any additional drinks.
+        Calulates price and adds to total list of orders
+        """
+
+        totalPrice = 0
 
         drink_list = []
         price = 0.00
@@ -131,39 +140,56 @@ class BistroSystem:
 
             drink = Drink(type=drinkChoice,size=drinkSize,add_on=add_on_list,price=price)
             drink_list.append(drink)
+    
 
             self.total_sales += price
             self.total_orders.add(drinkChoice)
 
+            totalPrice += price
             price = 0.00
 
             #Allows user to add multiple drinks to one order
-            print(f"Your current order is, {drink_list}")
+            print(f"\nYour current order is")
+            for drink in drink_list:
+                print(f"\nDrink: {drink.type}, size: {drink.size}, add-ons: {drink.add_on}, price: {drink.price}")
+                print(f"Total price: {totalPrice}\n")
             additionalOrder = str(input("Add additional item? [y or n]: ")).casefold()
             while additionalOrder != "y".casefold() and additionalOrder != "n".casefold():
                 additionalOrder = str(input("Add additional item? [y or n]: ")).casefold()
             if additionalOrder == "n".casefold():
                 takingOrder = False  
 
+        print(f"CCCCCCCCCCCC {self.currentOrders}")
         customerOrder = CustomerOrder(name=customer,order=drink_list)
         self.currentOrders.append(customerOrder)
+        print(f"DDDDDDDDDDD {self.currentOrders}")
 
     def viewOrders(self) -> None:
-        print(f"CURRENT UNFULFILLED ORDERS\n===============\n{self.currentOrders}")
+        """
+        Prints out the current Linked List of unfullfilled orders
+        """
+        print(f"CURRENT UNFULFILLED ORDERS\n===============\n{self.currentOrders}\n===============")
 
     def completeOrder(self) -> None:
-        completed_order = str(input("What order to complete?: ")).casefold()
+        """
+        Asks for the customer whos order is done, and removes their order from the Linked List of total orders
+        """
+        completed_order = str(input("Enter customer's name to complete: ")).casefold()
+
         for order in self.currentOrders:
-            print(order)
-            print(order.name)
-            print(order.name.casefold())
-            
+
             name = order.name
             if completed_order == name.casefold():
+                print(f"BBBBBBBB {self.currentOrders}")
                 self.currentOrders.remove(order)
+                print(f"AAAAAAA {self.currentOrders}")
+                return
         print("Order not in list")
 
     def viewDayReport(self) -> None:
+        """
+        Adds the date, what drinks were made, what add ons were used, and total sales of the day to a text file to print
+        """
 
         current_time = datetime.datetime.now()
         year = current_time.year
@@ -178,7 +204,6 @@ class BistroSystem:
             file.seek(0)
             date = file.readline().rstrip()
             if date != current_day:
-                print("NOT SAME")
                 lines = file.readlines() # read old content
                 file.seek(0) # go back to the beginning of the file
                 file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
@@ -188,7 +213,6 @@ class BistroSystem:
                     file.write(line)
                 file.close
             else:
-                print("SAME")
                 file.seek(0)
                 file.truncate()
                 file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
@@ -199,6 +223,9 @@ class BistroSystem:
             print(report)
 
     def exit(self) -> None:
+        """
+        Ends the program
+        """
         exit = str(input("Log out? [y/n]:")).casefold()
         while exit  != "y".casefold()  and exit != "n".casefold() :
             exit = str(input("Log out? [y/n]:")).casefold()

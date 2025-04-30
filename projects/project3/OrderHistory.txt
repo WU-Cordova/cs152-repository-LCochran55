@@ -1,5 +1,5 @@
-4/28/2025
+4/30/2025
 =============================
-DRINKS ORDERS:{'tea': 1}
-ADD-ONS USED:{}
-TOTAL SALES: 1.0
+DRINKS ORDERS:{'mocha': 2, 'matcha': 1}
+ADD-ONS USED:{'syrup': 1, 'espresso shot': 1, 'alt. milk': 1}
+TOTAL SALES: 6.5

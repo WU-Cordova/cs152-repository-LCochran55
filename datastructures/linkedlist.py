@@ -128,7 +128,7 @@ class LinkedList[T](ILinkedList[T]):
         
         travel = self.head 
     
-        if self.head == item:
+        if self.head.data is item:
             self.head = self.head.next
             self.head = None
             return
@@ -137,12 +137,13 @@ class LinkedList[T](ILinkedList[T]):
                 break
             prev = travel
             travel = travel.next
+        
         if travel is None:
                 raise ValueError(f"The target item, {item}, is not in the linked list")
  
         prev.next = travel.next
         travel = None
-
+        
         self.count-=1
 
     def remove_all(self, item: T) -> None:

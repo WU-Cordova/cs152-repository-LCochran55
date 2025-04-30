@@ -25,10 +25,23 @@
     Open Order Queue/completed orders;
     For this I originally considered a circular queue, since this is what my mind thinks of when taking orders, however I did not want to set a max size for the queue, and allow the user/barista to complete orders as they like.
     So, I implemeted a complete order function which allows the user to look through the current orders and remove the order they have completed. 
+    The limitation of this, is that when two orders have the same name the order that came first will always be removed.
     This should be an o(1) time complexity.
 
 
 2) Instructions to run the program.
+    To start, simply choose which option you would like to use from the main menu.
+    Option one displays the menu
+    Option 2 allows the user to take a customers order. Input the customers name, drink, size, add-ons, and additional drinks with each prompt
+    Option 3 prints out the current unfulfilled orders
+    Option 4 allows the user to fulfill an order by entering the name of the completed order when prompted
+    Option 5 reports the days total drinks, add-ons used, and sales.
+    Option 6 allows the user to log out and quit the program.
+
+
 3) Sample run(s) as screenshot(s) or pasted output.
+
+
+
 4) Any known bugs or limitations.
 5) What you’d add next if you had more time.
