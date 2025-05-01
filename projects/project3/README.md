@@ -44,9 +44,10 @@
 
 
 4) Any known bugs or limitations.
+    The end of day report does not keep track of history past the current session. 
 
 
 
 
 5) What you’d add next if you had more time.
-    If I had more time, Id like to have made a log in function that accepts a password to log in.
+    If I had more time, Id like to have made a log in function that accepts a password to log in. Additionally, my end of day report was supposed to keep track of history for past days/past sessions, however the report does not. With more time I would like to improve this

@@ -120,30 +120,43 @@ class LinkedList[T](ILinkedList[T]):
         self.count+=1
 
     def remove(self, item: T) -> None:
-        if not(isinstance(item,self.data_type)):
-            raise TypeError("Item is not of type {self.data_type}")
+        if not isinstance(item, self.data_type):
+            raise TypeError(f"Item is not of type {self.data_type}")
         
         if item not in self:
             raise ValueError(f"The target item, {item}, is not in the linked list")
-        
-        travel = self.head 
-    
-        if self.head.data == item:
-            self.head = self.head.next
-            self.count-=1
-            return
-        while(travel is not None): 
-            if travel.data == item: 
-                break
-            prev = travel
+
+        travel = self.head
+
+        while travel is not None:
+            if travel.data == item:
+                # Case 1: removing the head
+                if travel == self.head:
+                    self.head = travel.next
+                    if self.head:
+                        self.head.previous = None
+                    else:
+                        # list is now empty
+                        self.tail = None
+                # Case 2: removing the tail
+                elif travel == self.tail:
+                    self.tail = travel.previous
+                    if self.tail:
+                        self.tail.next = None
+                    else:
+                        # list is now empty
+                        self.head = None
+                # Case 3: removing from the middle
+                else:
+                    if travel.previous:
+                        travel.previous.next = travel.next
+                    if travel.next:
+                        travel.next.previous = travel.previous
+
+                self.count -= 1
+                return
+            
             travel = travel.next
-        
-        if travel is None:
-                raise ValueError(f"The target item, {item}, is not in the linked list")
- 
-        prev.next = travel.next
-        # travel = None    
-        self.count-=1
 
     def remove_all(self, item: T) -> None:
         if not(isinstance(item,self.data_type)):

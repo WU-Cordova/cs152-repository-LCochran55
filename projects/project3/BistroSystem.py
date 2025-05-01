@@ -140,8 +140,6 @@ class BistroSystem:
 
             drink = Drink(type=drinkChoice,size=drinkSize,add_on=add_on_list,price=price)
             drink_list.append(drink)
-            print("FFFFF")
-            print(drink_list)
     
 
             self.total_sales += price
@@ -161,10 +159,10 @@ class BistroSystem:
             if additionalOrder == "n".casefold():
                 takingOrder = False  
 
-        print(f"CCCCCCCCCCCC {self.currentOrders}")
+
         customerOrder = CustomerOrder(name=customer,order=drink_list)
         self.currentOrders.append(customerOrder)
-        print(f"DDDDDDDDDDD {self.currentOrders}")
+
 
     def viewOrders(self) -> None:
         """
@@ -181,9 +179,9 @@ class BistroSystem:
         for order in self.currentOrders:
             name = order.name
             if completed_order == name.casefold():
-                print(f"BBBBBBBB {self.currentOrders}")
+
                 self.currentOrders.remove(order)
-                print(f"AAAAAAA {self.currentOrders}")
+                
                 return
         print("Order not in list")
 
