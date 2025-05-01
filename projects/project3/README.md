@@ -44,4 +44,9 @@
 
 
 4) Any known bugs or limitations.
+
+
+
+
 5) What you’d add next if you had more time.
+    If I had more time, Id like to have made a log in function that accepts a password to log in.
