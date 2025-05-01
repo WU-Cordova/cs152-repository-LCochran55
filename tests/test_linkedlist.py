@@ -2,6 +2,8 @@ import pytest
 
 from datastructures.ilinkedlist import ILinkedList
 from datastructures.linkedlist import LinkedList
+from tests.car import Car
+
 
 class TestLinkedList:
 
@@ -143,3 +145,23 @@ class TestLinkedList:
             linked_list.insert_after(10, 99)  # Target not in list
         with pytest.raises(ValueError):
             linked_list.remove(10)  # Item not in list
+
+
+
+    def test_complex_object_ref(self) -> None:
+            linked_list = LinkedList[Car].from_sequence([Car("Toyota"), Car("Honda")], data_type=Car)
+            
+            linked_list.remove_all(Car("Toyota"))
+            assert len(linked_list) == 1
+            
+            linked_list.remove(Car("Honda"))
+            assert len(linked_list) == 0
+
+            linked_list.append(Car("Toyota"))
+            assert len(linked_list) == 1
+
+            linked_list.append(Car("Honda"))
+
+            assert len(linked_list) == 2
+
+            assert list(linked_list) == [Car("Toyota"), Car("Honda")]
