@@ -20,7 +20,7 @@
     After the user is done ordering the list and the customers name is then added to a customerOrder, which is then appened to the linkedlist of all current customer orders.
     An additional implmentation, I created a variable for the total sales and total drinks/add-ons used during the day, which are saved in a TXT file when checking the day report. 
     The variable for total drinks and add_ons are bags, so when a customer orders a drink/add on the value of the key increases. This allows for easy printing so that there is not a long list of repeating items and only up to 4 items with values that indicate how many times they have been ordered.
-    I believe all my functions in this are o(1).
+    I believe all my functions in this are o(1) or o(n) since the customer can keep ordering orders until they want to stop.
 
     Open Order Queue/completed orders;
     For this I originally considered a circular queue, since this is what my mind thinks of when taking orders, however I did not want to set a max size for the queue, and allow the user/barista to complete orders as they like.
@@ -40,14 +40,128 @@
 
 
 3) Sample run(s) as screenshot(s) or pasted output.
-
+    View end of README
 
 
 4) Any known bugs or limitations.
-    The end of day report does not keep track of history past the current session. 
-
-
+    For a short bit, removing the last item in the Linked list resulted in not being able to append more items, howver this was fixed (with Prof. Cordova's help) and there are no current bugs that I know of. 
 
 
 5) What you’d add next if you had more time.
-    If I had more time, Id like to have made a log in function that accepts a password to log in. Additionally, my end of day report was supposed to keep track of history for past days/past sessions, however the report does not. With more time I would like to improve this
+    If I had more time, Id like to have made a log in function that accepts a password to log in. Additionally, my end of day report was supposed to keep track of history for past days/past sessions, however the report does not. With more time I would like to improve this, some of my previous code trying to achieve this is commented out in my end of day report function. 
+
+
+
+Welcome to bearcat Bistro!
+1. Display Menu
+2. Take new order
+3. View Open Orders
+4. Mark Next Order as Complete
+5. View End of Day Report
+6. Log Out and Exit
+
+1
+         ___ ___    ___  ____   __ __ 
+        |   |   |  /  _||    \ |  |  |
+        | _   _ | /  [_ |  _  ||  |  |
+        |  \_/  ||    _]|  |  ||  |  |
+        |   |   ||   |_ |  |  ||  :  |
+        |   |   ||     ||  |  ||     |
+        |___|___||_____||__|__| \__,_|
+
+<><><><><><><><><><><><><><><><><><><><><><><>
+
+DRINKS.......................... s  / m / l
+Latte...........................1.20/1.45/1.70
+Mocha...........................1.25/1.50/1.75
+Tea.............................1.00/1.25/1.50
+Matcha..........................2.00/2.25/2.50
+Lemonade........................1.00/1.25/1.50
+
+  |  ADD-ONS                      |
+  |  Espresso Shot............50  |
+  |  Syrup....................25  |
+  |  Alt. Milk................50  |
+
+<><><><><><><><><><><><><><><><><><><><><><><>
+
+Welcome to bearcat Bistro!
+1. Display Menu
+2. Take new order
+3. View Open Orders
+4. Mark Next Order as Complete
+5. View End of Day Report
+6. Log Out and Exit
+
+2
+What is the name for the order?: Liam
+
+Drink Choice?: Matcha
+
+Size? [s,m,l]: s
+
+Any add-ons? [y or n]: n
+
+Your current order is
+
+--matcha (s), [] ; 2.0
+
+Total price: 2.0
+
+Add additional item? [y or n]: n
+
+Welcome to bearcat Bistro!
+1. Display Menu
+2. Take new order
+3. View Open Orders
+4. Mark Next Order as Complete
+5. View End of Day Report
+6. Log Out and Exit
+
+3
+CURRENT UNFULFILLED ORDERS
+===============
+Liam's order
+--matcha (s), [] ; 2.0
+Total price: 2.0
+===============
+
+Welcome to bearcat Bistro!
+1. Display Menu
+2. Take new order
+3. View Open Orders
+4. Mark Next Order as Complete
+5. View End of Day Report
+6. Log Out and Exit
+
+4
+Enter customer's name to complete: Liam
+Liam's order is completed!
+
+Welcome to bearcat Bistro!
+1. Display Menu
+2. Take new order
+3. View Open Orders
+4. Mark Next Order as Complete
+5. View End of Day Report
+6. Log Out and Exit
+
+5
+5/1/2025
+=============================
+DRINKS ORDERS:{'matcha': 1}
+ADD-ONS USED:{}
+TOTAL SALES: 2.0
+
+
+Welcome to bearcat Bistro!
+1. Display Menu
+2. Take new order
+3. View Open Orders
+4. Mark Next Order as Complete
+5. View End of Day Report
+6. Log Out and Exit
+
+6
+Log out? [y/n]:y
+Logging out...

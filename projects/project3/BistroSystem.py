@@ -97,16 +97,16 @@ class BistroSystem:
         takingOrder = True
 
         while takingOrder == True:
-            drinkChoice = str(input(f"Drink Choice?: ")).casefold()
+            drinkChoice = str(input(f"\nDrink Choice?: ")).casefold()
             while drinkChoice not in self.menu:
                 print(f"Item not on menu")
-                drinkChoice = str(input(f"Drink Choice?: ")).casefold()
+                drinkChoice = str(input(f"\nDrink Choice?: ")).casefold()
             price += self.menu.get(drinkChoice)
                 
-            drinkSize = str(input(f"Size? [s,m,l]: ")).casefold()
+            drinkSize = str(input(f"\nSize? [s,m,l]: ")).casefold()
             while drinkSize  != "s".casefold() and drinkSize != "m".casefold()  and drinkSize  != "l".casefold() :
                 print(f"Size not on menu")
-                drinkSize = str(input(f"Size? [s,m,l]: ")).casefold()
+                drinkSize = str(input(f"\nSize? [s,m,l]: ")).casefold()
             #Adds to price if user wants a bigger drink
             if drinkSize == 'm'.casefold() :
                 price += .25
@@ -115,9 +115,9 @@ class BistroSystem:
             
             add_on_list = []
 
-            add = str(input(f"Any add-ons? [y or n]: ")).casefold()
+            add = str(input(f"\nAny add-ons? [y or n]: ")).casefold()
             while add  != "y".casefold()  and add  != "n".casefold() :
-                add = str(input(f"Any add-ons? [y or n]: ")).casefold()
+                add = str(input(f"\nAny add-ons? [y or n]: ")).casefold()
             
             #Will ask the user for any add-ons they want until they input n 
             while add  == "y".casefold() :
@@ -134,9 +134,9 @@ class BistroSystem:
 
                 #Continues to ask the user for any add-ons they want until they input n 
                 #Allows user to add more than 1 syrup, espresso, etc
-                add = str(input(f"Any more add-ons? [y or n]: ")).casefold()
+                add = str(input(f"\nAny more add-ons? [y or n]: ")).casefold()
                 while add  != "y".casefold()  and add  != "n".casefold() :
-                    add = str(input(f"Any add-ons? [y or n]: ")).casefold()
+                    add = str(input(f"\nAny add-ons? [y or n]: ")).casefold()
 
             drink = Drink(type=drinkChoice,size=drinkSize,add_on=add_on_list,price=price)
             drink_list.append(drink)
@@ -151,11 +151,11 @@ class BistroSystem:
             #Allows user to add multiple drinks to one order
             print(f"\nYour current order is")
             for drink in drink_list:
-                print(f"\nDrink: {drink.type}, size: {drink.size}, add-ons: {drink.add_on}, price: {drink.price}")
-                print(f"Total price: {totalPrice}\n")
-            additionalOrder = str(input("Add additional item? [y or n]: ")).casefold()
+                print(f"\n--{drink.type} ({drink.size}), {drink.add_on} ; {drink.price}")
+                print(f"\nTotal price: {totalPrice}")
+            additionalOrder = str(input("\nAdd additional item? [y or n]: ")).casefold()
             while additionalOrder != "y".casefold() and additionalOrder != "n".casefold():
-                additionalOrder = str(input("Add additional item? [y or n]: ")).casefold()
+                additionalOrder = str(input("\nAdd additional item? [y or n]: ")).casefold()
             if additionalOrder == "n".casefold():
                 takingOrder = False  
 
@@ -168,7 +168,16 @@ class BistroSystem:
         """
         Prints out the current Linked List of unfullfilled orders
         """
-        print(f"CURRENT UNFULFILLED ORDERS\n===============\n{self.currentOrders}\n===============")
+        totalPrice = 0
+        print(f"CURRENT UNFULFILLED ORDERS\n===============")
+        for order in self.currentOrders:
+            print(f"{order.name}'s order")
+            for drink in order.order:
+                totalPrice += drink.price
+                print(f"--{drink.type} ({drink.size}), {drink.add_on} ; {drink.price}")
+            print(f"Total price: {totalPrice}")
+
+        print(f"===============")
 
     def completeOrder(self) -> None:
         """
@@ -179,10 +188,10 @@ class BistroSystem:
         for order in self.currentOrders:
             name = order.name
             if completed_order == name.casefold():
-
                 self.currentOrders.remove(order)
-                
+                print(f"{name}'s order is completed!")
                 return
+            
         print("Order not in list")
 
     def viewDayReport(self) -> None:
@@ -200,22 +209,22 @@ class BistroSystem:
         historyFile = "projects\\project3\\OrderHistory.txt"
 
         with open(historyFile,'r+') as file:
+            # file.seek(0)
+            # date = file.readline().rstrip()
+            # if date != current_day:
+            #     lines = file.readlines() # read old content
+            #     file.seek(0) # go back to the beginning of the file
+            #     file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
+            #     file.write(date)
+            #     file.write("\n")
+            #     for line in lines: # write old content after new
+            #         file.write(line)
+            #     file.close
+            # else:
             file.seek(0)
-            date = file.readline().rstrip()
-            if date != current_day:
-                lines = file.readlines() # read old content
-                file.seek(0) # go back to the beginning of the file
-                file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
-                file.write(date)
-                file.write("\n")
-                for line in lines: # write old content after new
-                    file.write(line)
-                file.close
-            else:
-                file.seek(0)
-                file.truncate()
-                file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
-                file.close
+            file.truncate()
+            file.write(f"{current_day}\n=============================\nDRINKS ORDERS:{str(self.total_orders)}\nADD-ONS USED:{str(self.total_add_ons)}\nTOTAL SALES: {self.total_sales}\n") # write new content at the beginning
+            file.close
         
         with open(historyFile,'r') as openfile:
             report = openfile.read()
@@ -227,7 +236,7 @@ class BistroSystem:
         """
         exit = str(input("Log out? [y/n]:")).casefold()
         while exit  != "y".casefold()  and exit != "n".casefold() :
-            exit = str(input("Log out? [y/n]:")).casefold()
+            exit = str(input("Log out? [y/n]: ")).casefold()
         if exit == "y".casefold():
             print("Logging out...")
             exit
